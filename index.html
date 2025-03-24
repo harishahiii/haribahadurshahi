@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hari Bahadur Shahi - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Menu Button -->
+    <div class="menu-button" onclick="toggleMenu()">☰ Menu</div>
+
+    <!-- Navigation (hidden by default) -->
+    <nav id="navMenu" class="hidden">
+        <ul>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#comments">What Others Say</a></li>
+        </ul>
+    </nav>
+
+    <!-- Introduction Section -->
+    <section id="introduction" class="introduction">
+        <div class="intro-header">
+         <img src="profile.jpg" alt="Hari Bahadur Shahi" class="intro-img" id="profilePic">
+        </div>
+        <h1>Hari Bahadur Shahi</h1>
+        <h2>Introduction</h2>
+        <p class="intro-text">
+            I am a passionate web developer, editor, photographer, and videographer. I love creating beautiful websites, capturing memories through my lens, and editing content to tell meaningful stories. My journey is a blend of creativity and technology.
+        </p>
+    </section>
+
+    <!-- Sections for work -->
+    <section class="sections">
+        <div class="section photography">
+            <h2>Photography</h2>
+            <input type="file" id="photoUpload" class="upload-btn" onchange="checkFilePermission('photoUpload')">
+            <div class="gallery" id="photoGallery"></div>
+        </div>
+        <div class="section coding">
+            <h2>Coding</h2>
+            <input type="file" id="codeUpload" class="upload-btn" onchange="checkFilePermission('codeUpload')">
+            <div class="gallery" id="codeGallery"></div>
+        </div>
+        <div class="section videography">
+            <h2>Videography</h2>
+            <input type="file" id="videoUpload" class="upload-btn" onchange="checkFilePermission('videoUpload')">
+            <div class="gallery" id="videoGallery"></div>
+        </div>
+        <div class="section editing">
+            <h2>Editing</h2>
+            <input type="file" id="editUpload" class="upload-btn" onchange="checkFilePermission('editUpload')">
+            <div class="gallery" id="editGallery"></div>
+        </div>
+    </section>
+
+    <!-- Comments Section (What others say) -->
+    <section id="comments" class="comments">
+        <h2>What Others Say</h2>
+        <textarea id="commentText" placeholder="Write a comment..."></textarea>
+        <button onclick="submitComment()">Send</button>
+        <div id="commentDisplay"></div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>Contact Me</h2>
+        <form id="contactForm">
+            <input type="text" id="contactName" placeholder="Your Name" required>
+            <input type="email" id="contactEmail" placeholder="Your Email" required>
+            <textarea id="contactMessage" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2>About Me</h2>
+        <p>I am a passionate developer who loves both creative and technical work. From capturing beautiful moments to coding seamless websites, I blend these elements to make meaningful experiences.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="socials">
+            <a href="https://www.facebook.com" target="_blank">
+                <img src="images/facebook-icon.png" alt="Facebook">
+            </a>
+            <a href="https://www.youtube.com/@Traveller827" target="_youtube">
+                <img src="images/youtube-icon.png" alt="YouTube">
+            </a>
+        </div>
+        <p>© 2025 Hari Bahadur Shahi. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function checkFilePermission(id) {
+            const password = prompt("Please enter your password to upload:");
+            const correctPassword = "yourpassword"; // Replace 'yourpassword' with your actual password
+
+            if (password === correctPassword) {
+                // Allow file upload
+                document.getElementById(id).disabled = false;
+            } else {
+                // Deny file upload
+                document.getElementById(id).disabled = true;
+                alert("You do not have permission to upload files.");
+            }
+        }
+
+        // Toggle Menu Function
+        function toggleMenu() {
+            const menu = document.getElementById("navMenu");
+            menu.classList.toggle("show");
+        }
+
+        // Update Profile Picture
+        function updateProfilePic() {
+            const file = document.getElementById("profileUpload").files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                document.getElementById("profilePic").src = e.target.result;
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Submit Comment Function
+        function submitComment() {
+            const commentText = document.getElementById("commentText").value;
+            const commentDisplay = document.getElementById("commentDisplay");
+
+            if (commentText) {
+                const newComment = document.createElement("p");
+                newComment.textContent = commentText;
+                commentDisplay.appendChild(newComment);
+                document.getElementById("commentText").value = "";
+            }
+        }
+
+        // Contact Form Submission
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            alert("Message sent! Thank you for reaching out.");
+        });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body */
+body {
+    background: linear-gradient(135deg, #ff7eb3, #4a90e2);
+    color: white;
+    text-align: center;
+}
+
+/* Menu Button */
+.menu-button {
+    font-size: 20px;
+    background-color: rgba(0, 102, 204, 0.5);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border-radius: 5px;
+}
+
+/* Navigation */
+#navMenu {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    background-color: rgba(0, 0, 204, 0.8);
+    border-radius: 5px;
+}
+
+#navMenu ul {
+    list-style: none;
+}
+
+#navMenu li {
+    padding: 10px;
+}
+
+#navMenu li a {
+    text-decoration: none;
+    color: white;
+}
+
+#navMenu li a:hover {
+    color: #4a90e2;
+}
+
+/* Introduction */
+.introduction {
+    margin-top: 100px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+}
+
+.introduction .intro-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.introduction .intro-img-upload {
+    display: none;
+}
+
+.introduction .intro-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+}
+
+.introduction h1 {
+    font-size: 36px;
+    color: #ff7f50;
+}
+
+.intro-text {
+    font-size: 30px;
+    line-height: 1.5;
+    font-weight: honest script;
+    color: #ffcc05;
+}
+
+/* About Section */
+.about {
+    margin-top: 50px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+}
+
+/* Sections */
+.sections {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 50px 0;
+}
+
+.section {
+    width: 45%;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px;
+    transition: transform 0.3s ease;
+    color: white;
+}
+
+.photography { background: #ff7f50; }
+.coding { background: #4caf50; }
+.videography { background: #007acc; }
+.editing { background: #ffcc00; }
+
+.section:hover {
+    transform: scale(1.05);
+}
+
+/* Comments Section */
+.comments {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    margin-top: 50px;
+    border-radius: 15px;
+}
+
+textarea {
+    width: 30%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 18px;
+    border-radius: 3px;
+}
+
+button {
+    padding: 10px;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0066cc;
+}
+
+/* Contact Section */
+.contact {
+    margin-top:20px;
+    padding: 23px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+}
+
+.contact input, .contact textarea {
+    width: 30%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+/* Footer */
+footer {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+footer p {
+    font-size: 14px;
+}
+
+.socials img {
+    width: 40px;
+    margin: 10px;
+    transition: transform 0.3s;
+}
+
+.socials img:hover {
+    transform: scale(1.2);
+}
+
+/* Hidden Menu */
+.hidden {
+    display: none;
+}
+
+/* Show Menu */
+#navMenu.show {
+    display: block;
+}
