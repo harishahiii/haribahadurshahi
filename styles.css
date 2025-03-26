@@ -1,0 +1,92 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: white;
+    overflow-x: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #1e1e1e;
+}
+
+.profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.roles {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #00bcd4;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.menu-toggle, .settings-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.menu, .settings-content {
+    display: none;
+    background: #333;
+    padding: 10px;
+    position: absolute;
+    right: 10px;
+    top: 50px;
+}
+
+.menu.show, .settings-content.show {
+    display: block;
+}
+
+/* BOX LAYOUT CHANGE */
+.content-box {
+    padding: 20px;
+    margin: 20px auto; /* Center boxes */
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease-in-out;
+    max-width: 600px; /* NEW: Sets a max width */
+    text-align: center;
+}
+
+.content-box.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#photography { background: #ff5722; }
+#videography { background: #3f51b5; }
+#editing { background: #009688; }
+#coding { background: #8e24aa; }
+
+.upload-btn {
+    display: block;
+    margin: 10px 0;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #222;
+    margin-top: 20px;
+}
+
+.content-box:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
