@@ -1,102 +1,2029 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7051935866493409"
-     crossorigin="anonymous"></script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hari Bahadur Shahi</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <title>My Personal Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    <style>
+        /* CSS will be placed here for initial load */
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --accent: #fd79a8;
+            --success: #00b894;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    <header id="header">
-        <h1 class="hidden" id="name">Hari Bahadur Shahi</h1>
-        <img src="profile.jpg" alt="Profile Photo" class="profile-photo">
-        <div class="roles">Photographer || Videographer || Editor || Developer</div>
-        <nav>
-            <button class="menu-toggle">☰ Menu</button>
-            <ul class="menu hidden">
-                <li><a href="#about">About</a></li>
-                <li><a href="#photography">Photography</a></li>
-                <li><a href="#videography">Videography</a></li>
-                <li><a href="#editing">Editing</a></li>
-                <li><a href="#coding">Coding</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#settings">Settings</a></li>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- 3D Background Elements -->
+    <div class="three-d-background">
+        <canvas id="bg-canvas"></canvas>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Floating Navigation -->
+        <nav class="floating-nav">
+            <div class="nav-logo">
+                <span class="logo-text">MyPortfolio</span>
+                <div class="logo-dot"></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#profile" class="nav-link">Profile</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#documents" class="nav-link">Documents</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
+            <div class="nav-actions">
+                <button class="login-btn" id="loginBtn">Admin Login</button>
+            </div>
         </nav>
-    </header>
- <h2>Introduction</h2>
-        <p class="intro-text">
-           Welcome to my website! HI  I am a passionate web developer, editor, photographer, and videographer. I love creating beautiful websites, capturing memories through my lens, and editing content to tell meaningful stories. My journey is a blend of creativity and technology.
-        </p>
 
-    
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="home-content">
+                <div class="home-text">
+                    <h1 class="animated-title">Hello, I'm <span class="name-highlight">Your Name</span></h1>
+                    <p class="animated-subtitle">Welcome to my personal space on the web</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="home-image">
+                    <div class="image-container">
+                        <img src="https://via.placeholder.com/400x400" alt="Profile Image" class="profile-image">
+                        <div class="image-border-animation"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="mouse"></div>
+                <p>Scroll Down</p>
+            </div>
+        </section>
 
-    </section>
-    
-    <section id="photography" class="content-box">
-        <h2>Photography</h2>
-        <input type="file" id="photoUpload" class="upload-btn" accept="image/*">
-        <div id="photoGallery"></div>
-    </section>
-    
-    <section id="videography" class="content-box">
-        <h2>Videography</h2>
-        <input type="file" id="videoUpload" class="upload-btn" accept="video/*">
-        <div id="videoGallery"></div>
-    </section>
-    
-    <section id="editing" class="content-box">
-        <h2>Editing</h2>
-        <p>Coming soon...</p>
-    </section>
-    
-    <section id="coding" class="content-box">
-        <h2>Coding</h2>
-        <input type="file" id="codeUpload" class="upload-btn" accept=".txt,.js,.html,.css,.py">
-        <div id="codeGallery"></div>
-    </section>
-    
-    <section id="pdf-section" class="content-box">
-        <h2>PDFs</h2>
-        <input type="file" id="pdfUpload" class="upload-btn" accept="application/pdf">
-        <div id="pdfGallery"></div>
-    </section>
-    
-    <section id="what-others-say">
-        <h2>What Others Say</h2>
-        <textarea placeholder="Leave a comment..."></textarea>
-        <button>Send</button>
-    </section>
-    
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <input type="text" placeholder="Your Name">
-        <input type="email" placeholder="Your Email">
-        <textarea placeholder="Your Message"></textarea>
-        <button>Send</button>
-    </section>
-    
-    <section id="settings" class="hidden">
-        <h2>Settings</h2>
-        <button class="settings-toggle">⚙ Settings</button>
-        <div class="settings-content hidden">
-            <ul>
-                <li><button id="theme-toggle">Toggle Dark/Light Mode</button></li>
-                <li><button id="view-history">View History</button></li>
-            </ul>
+        <!-- Profile Section -->
+        <section id="profile" class="section">
+            <div class="section-header">
+                <h2>About Me</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="profile-content">
+                <div class="profile-text">
+                    <h3>Who Am I?</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula.</p>
+                    <p>Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.</p>
+                    <div class="skills">
+                        <h4>My Skills</h4>
+                        <div class="skill-bars">
+                            <div class="skill-bar">
+                                <div class="skill-name">HTML/CSS</div>
+                                <div class="skill-progress" data-width="90%">
+                                    <div class="progress-bar" style="width: 0;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-name">JavaScript</div>
+                                <div class="skill-progress" data-width="80%">
+                                    <div class="progress-bar" style="width: 0;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-name">Design</div>
+                                <div class="skill-progress" data-width="75%">
+                                    <div class="progress-bar" style="width: 0;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="5">0</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="42">0</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="120">0</div>
+                        <div class="stat-label">Clients</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="section">
+            <div class="section-header">
+                <h2>Gallery</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="gallery-content">
+                <div class="gallery-controls">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="photos">Photos</button>
+                    <button class="filter-btn" data-filter="videos">Videos</button>
+                </div>
+                <div class="gallery-grid">
+                    <!-- Items will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Documents Section -->
+        <section id="documents" class="section">
+            <div class="section-header">
+                <h2>Documents</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="documents-content">
+                <div class="documents-list">
+                    <!-- Documents will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>Email</h4>
+                            <p>contact@example.com</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>Phone</h4>
+                            <p>+1 234 567 890</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>Location</h4>
+                            <p>New York, USA</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subject">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span>MyPortfolio</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#profile">About</a>
+                    <a href="#gallery">Gallery</a>
+                    <a href="#documents">Documents</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 MyPortfolio. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <input type="text" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
         </div>
-    </section>
-        <section id="about">
-        <h2>About Me</h2>
-        <p>I am Hari Bahadur Shahi, passionate about photography, videography, editing, and coding.</p>
-    <footer>
-        <p>&copy; 2025 Hari Bahadur Shahi. All Rights Reserved.</p>
-        <p>Contact: <a href="mailto:harishahi909@gmail.com">harishahi909@gmail.com</a></p>
-        <p>Follow me: <a href="https://www.instagram.com/harishahi2">Instagram</a> | <a href="https://www.facebook.com/profile.php?id=100080649877477">Facebook</a> | <a href="https://www.youtube.com/@Traveller827">YouTube</a></p>
-    </footer>
+    </div>
+
+    <!-- Admin Panel (hidden by default) -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h3>Admin Panel</h3>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+        <div class="admin-tabs">
+            <button class="admin-tab active" data-tab="media">Media Upload</button>
+            <button class="admin-tab" data-tab="documents">Documents Upload</button>
+            <button class="admin-tab" data-tab="profile">Edit Profile</button>
+        </div>
+        <div class="admin-content">
+            <div class="admin-tab-content active" data-tab-content="media">
+                <h4>Upload Media</h4>
+                <form id="mediaUploadForm">
+                    <div class="form-group">
+                        <label>Media Type</label>
+                        <select id="mediaType">
+                            <option value="photo">Photo</option>
+                            <option value="video">Video</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Media File</label>
+                        <input type="file" id="mediaFile" accept="image/*,video/*" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="mediaTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="mediaDescription"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Upload Media</button>
+                </form>
+            </div>
+            <div class="admin-tab-content" data-tab-content="documents">
+                <h4>Upload Documents</h4>
+                <form id="documentUploadForm">
+                    <div class="form-group">
+                        <label>Document File (PDF)</label>
+                        <input type="file" id="documentFile" accept=".pdf" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="documentTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="documentDescription"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Upload Document</button>
+                </form>
+            </div>
+            <div class="admin-tab-content" data-tab-content="profile">
+                <h4>Edit Profile</h4>
+                <form id="profileEditForm">
+                    <div class="form-group">
+                        <label>Profile Image</label>
+                        <input type="file" id="profileImage" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="profileName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Bio</label>
+                        <textarea id="profileBio" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="profileEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" id="profilePhone">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="profileLocation">
+                    </div>
+                    <button type="submit" class="submit-btn">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Media Viewer Modal -->
+    <div class="media-viewer" id="mediaViewer">
+        <span class="close-viewer">&times;</span>
+        <div class="viewer-content">
+            <img id="viewerImage" src="" alt="">
+            <video id="viewerVideo" controls style="display: none;"></video>
+            <div class="viewer-info">
+                <h3 id="viewerTitle"></h3>
+                <p id="viewerDescription"></p>
+                <div class="viewer-actions">
+                    <button class="download-btn" id="downloadMedia">Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script>
+        // Main JavaScript will be placed here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading screen after 2 seconds (simulate loading)
+            setTimeout(function() {
+                document.querySelector('.loading-screen').style.opacity = '0';
+                setTimeout(function() {
+                    document.querySelector('.loading-screen').style.display = 'none';
+                }, 500);
+            }, 2000);
+            
+            // Initialize 3D background
+            init3DBackground();
+            
+            // Initialize animations
+            initAnimations();
+            
+            // Initialize gallery
+            initGallery();
+            
+            // Initialize documents
+            initDocuments();
+            
+            // Initialize admin panel functionality
+            initAdminPanel();
+            
+            // Initialize smooth scrolling
+            initSmoothScrolling();
+            
+            // Initialize form submissions
+            initForms();
+        });
+        
+        function init3DBackground() {
+            const canvas = document.getElementById('bg-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 500;
+            
+            const posArray = new Float32Array(particlesCount * 3);
+            
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: new THREE.Color(var(--primary)),
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 3;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+        
+        function initAnimations() {
+            // Animate title
+            gsap.from('.animated-title', {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                ease: 'power3.out'
+            });
+            
+            gsap.from('.animated-subtitle', {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                delay: 0.3,
+                ease: 'power3.out'
+            });
+            
+            gsap.from('.social-links a', {
+                duration: 1,
+                y: 30,
+                opacity: 0,
+                stagger: 0.1,
+                delay: 0.6,
+                ease: 'back.out'
+            });
+            
+            gsap.from('.profile-image', {
+                duration: 1.5,
+                scale: 0.8,
+                opacity: 0,
+                delay: 0.3,
+                ease: 'elastic.out(1, 0.5)'
+            });
+            
+            gsap.to('.image-border-animation', {
+                duration: 2,
+                rotation: 360,
+                repeat: -1,
+                ease: 'linear'
+            });
+            
+            // Scroll animations
+            gsap.utils.toArray('.section').forEach(section => {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top 80%',
+                    onEnter: () => {
+                        section.classList.add('active');
+                        gsap.from(section.querySelectorAll('h2, h3, p, .section-divider'), {
+                            duration: 1,
+                            y: 50,
+                            opacity: 0,
+                            stagger: 0.1,
+                            ease: 'power3.out'
+                        });
+                    }
+                });
+            });
+            
+            // Animate skill bars
+            ScrollTrigger.create({
+                trigger: '.skill-bars',
+                start: 'top 80%',
+                onEnter: () => {
+                    document.querySelectorAll('.skill-progress').forEach(progress => {
+                        const width = progress.getAttribute('data-width');
+                        gsap.to(progress.querySelector('.progress-bar'), {
+                            duration: 1.5,
+                            width: width,
+                            ease: 'power3.out'
+                        });
+                    });
+                }
+            });
+            
+            // Animate stat numbers
+            ScrollTrigger.create({
+                trigger: '.profile-stats',
+                start: 'top 80%',
+                onEnter: () => {
+                    document.querySelectorAll('.stat-number').forEach(stat => {
+                        const target = parseInt(stat.getAttribute('data-count'));
+                        const duration = 2;
+                        const start = 0;
+                        const increment = target / (duration * 60);
+                        
+                        let current = start;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                clearInterval(timer);
+                                current = target;
+                            }
+                            stat.textContent = Math.floor(current);
+                        }, 1000 / 60);
+                    });
+                }
+            });
+        }
+        
+        function initGallery() {
+            // Sample gallery data (in a real app, this would come from a server)
+            const galleryData = [
+                { id: 1, type: 'photos', title: 'Nature Photo', description: 'Beautiful nature landscape', url: 'https://via.placeholder.com/800x600', thumbnail: 'https://via.placeholder.com/300x200' },
+                { id: 2, type: 'photos', title: 'City View', description: 'Skyline at night', url: 'https://via.placeholder.com/800x600/333', thumbnail: 'https://via.placeholder.com/300x200/333' },
+                { id: 3, type: 'videos', title: 'Travel Video', description: 'My recent travel adventure', url: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', thumbnail: 'https://via.placeholder.com/300x200/555' },
+                { id: 4, type: 'photos', title: 'Portrait', description: 'Professional portrait shot', url: 'https://via.placeholder.com/600x800', thumbnail: 'https://via.placeholder.com/200x300' },
+                { id: 5, type: 'videos', title: 'Tutorial', description: 'How to use this website', url: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', thumbnail: 'https://via.placeholder.com/300x200/777' },
+                { id: 6, type: 'photos', title: 'Product Shot', description: 'Latest product design', url: 'https://via.placeholder.com/800x600/999', thumbnail: 'https://via.placeholder.com/300x200/999' }
+            ];
+            
+            const galleryGrid = document.querySelector('.gallery-grid');
+            
+            // Render gallery items
+            function renderGallery(items) {
+                galleryGrid.innerHTML = '';
+                
+                items.forEach(item => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = `gallery-item ${item.type}`;
+                    galleryItem.setAttribute('data-id', item.id);
+                    
+                    galleryItem.innerHTML = `
+                        <div class="gallery-item-inner">
+                            ${item.type === 'photos' ? 
+                                `<img src="${item.thumbnail}" alt="${item.title}">` : 
+                                `<video src="${item.url}" poster="${item.thumbnail}"></video>`}
+                            <div class="gallery-item-overlay">
+                                <h4>${item.title}</h4>
+                                <p>${item.description}</p>
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                    `;
+                    
+                    galleryGrid.appendChild(galleryItem);
+                    
+                    // Add click event to open media viewer
+                    galleryItem.addEventListener('click', () => openMediaViewer(item));
+                });
+                
+                // Initialize hover effects
+                gsap.set('.gallery-item-overlay', { y: '100%' });
+                
+                document.querySelectorAll('.gallery-item').forEach(item => {
+                    item.addEventListener('mouseenter', () => {
+                        gsap.to(item.querySelector('.gallery-item-overlay'), {
+                            y: '0%',
+                            duration: 0.3,
+                            ease: 'power2.out'
+                        });
+                    });
+                    
+                    item.addEventListener('mouseleave', () => {
+                        gsap.to(item.querySelector('.gallery-item-overlay'), {
+                            y: '100%',
+                            duration: 0.3,
+                            ease: 'power2.in'
+                        });
+                    });
+                });
+            }
+            
+            // Filter gallery items
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    const filteredItems = filter === 'all' ? 
+                        galleryData : 
+                        galleryData.filter(item => item.type === filter);
+                    
+                    renderGallery(filteredItems);
+                });
+            });
+            
+            // Initial render
+            renderGallery(galleryData);
+        }
+        
+        function initDocuments() {
+            // Sample documents data (in a real app, this would come from a server)
+            const documentsData = [
+                { id: 1, title: 'Resume', description: 'My professional resume', url: 'https://example.com/sample.pdf', date: '2023-05-15' },
+                { id: 2, title: 'Portfolio', description: 'Collection of my works', url: 'https://example.com/portfolio.pdf', date: '2023-06-20' },
+                { id: 3, title: 'Certification', description: 'Professional certification', url: 'https://example.com/certificate.pdf', date: '2023-04-10' }
+            ];
+            
+            const documentsList = document.querySelector('.documents-list');
+            
+            // Render documents
+            function renderDocuments() {
+                documentsList.innerHTML = '';
+                
+                documentsData.forEach(doc => {
+                    const docItem = document.createElement('div');
+                    docItem.className = 'document-item';
+                    
+                    docItem.innerHTML = `
+                        <div class="document-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="document-info">
+                            <h4>${doc.title}</h4>
+                            <p>${doc.description}</p>
+                            <span class="document-date">${doc.date}</span>
+                        </div>
+                        <div class="document-actions">
+                            <button class="download-btn" data-url="${doc.url}">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                            <button class="view-btn" data-url="${doc.url}">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </div>
+                    `;
+                    
+                    documentsList.appendChild(docItem);
+                    
+                    // Add download event
+                    docItem.querySelector('.download-btn').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        downloadDocument(doc.url, doc.title);
+                    });
+                    
+                    // Add view event
+                    docItem.querySelector('.view-btn').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        window.open(doc.url, '_blank');
+                    });
+                });
+            }
+            
+            // Download document function
+            function downloadDocument(url, filename) {
+                // In a real app, this would trigger a proper download
+                // For demo purposes, we'll just simulate it
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename || 'document.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                
+                // Show download notification
+                showNotification('Download started: ' + (filename || 'document'));
+            }
+            
+            // Initial render
+            renderDocuments();
+        }
+        
+        function initAdminPanel() {
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const loginModal = document.getElementById('loginModal');
+            const closeModal = document.querySelector('.close-modal');
+            const adminPanel = document.getElementById('adminPanel');
+            
+            // Login button click
+            loginBtn.addEventListener('click', () => {
+                loginModal.style.display = 'flex';
+                gsap.from(loginModal.querySelector('.modal-content'), {
+                    duration: 0.3,
+                    scale: 0.9,
+                    opacity: 0,
+                    ease: 'back.out(1.7)'
+                });
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', () => {
+                loginModal.style.display = 'none';
+            });
+            
+            // Logout button click
+            logoutBtn.addEventListener('click', () => {
+                adminPanel.style.display = 'none';
+                loginBtn.style.display = 'block';
+                localStorage.removeItem('isAdminLoggedIn');
+            });
+            
+            // Check if already logged in
+            if (localStorage.getItem('isAdminLoggedIn')) {
+                adminPanel.style.display = 'block';
+                loginBtn.style.display = 'none';
+            }
+            
+            // Admin tabs
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const tabName = this.getAttribute('data-tab');
+                    document.querySelectorAll('.admin-tab-content').forEach(content => {
+                        content.classList.remove('active');
+                        if (content.getAttribute('data-tab-content') === tabName) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+        
+        function initSmoothScrolling() {
+            // Smooth scroll for navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetSection.offsetTop,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(lnk => lnk.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Update active nav link on scroll
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY;
+                
+                document.querySelectorAll('.section').forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            });
+        }
+        
+        function initForms() {
+            // Contact form submission
+            document.querySelector('.contact-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // In a real app, this would send the form data to a server
+                showNotification('Message sent successfully!');
+                this.reset();
+            });
+            
+            // Admin login form
+            document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // In a real app, this would validate credentials with a server
+                const username = this.querySelector('input[type="text"]').value;
+                const password = this.querySelector('input[type="password"]').value;
+                
+                // Simple validation for demo
+                if (username && password) {
+                    localStorage.setItem('isAdminLoggedIn', 'true');
+                    document.getElementById('loginModal').style.display = 'none';
+                    document.getElementById('adminPanel').style.display = 'block';
+                    document.getElementById('loginBtn').style.display = 'none';
+                    showNotification('Logged in successfully as admin');
+                } else {
+                    showNotification('Please enter both username and password', 'error');
+                }
+            });
+            
+            // Media upload form
+            document.getElementById('mediaUploadForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // In a real app, this would upload the file to a server
+                const file = document.getElementById('mediaFile').files[0];
+                if (file) {
+                    showNotification(`Media "${file.name}" uploaded successfully`);
+                    this.reset();
+                } else {
+                    showNotification('Please select a file to upload', 'error');
+                }
+            });
+            
+            // Document upload form
+            document.getElementById('documentUploadForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // In a real app, this would upload the file to a server
+                const file = document.getElementById('documentFile').files[0];
+                if (file) {
+                    showNotification(`Document "${file.name}" uploaded successfully`);
+                    this.reset();
+                } else {
+                    showNotification('Please select a file to upload', 'error');
+                }
+            });
+            
+            // Profile edit form
+            document.getElementById('profileEditForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // In a real app, this would save the profile data to a server
+                showNotification('Profile updated successfully');
+            });
+        }
+        
+        function openMediaViewer(media) {
+            const viewer = document.getElementById('mediaViewer');
+            const viewerImage = document.getElementById('viewerImage');
+            const viewerVideo = document.getElementById('viewerVideo');
+            const viewerTitle = document.getElementById('viewerTitle');
+            const viewerDescription = document.getElementById('viewerDescription');
+            const downloadBtn = document.getElementById('downloadMedia');
+            
+            if (media.type === 'photos') {
+                viewerImage.src = media.url;
+                viewerImage.style.display = 'block';
+                viewerVideo.style.display = 'none';
+                viewerVideo.pause();
+            } else {
+                viewerVideo.src = media.url;
+                viewerVideo.style.display = 'block';
+                viewerImage.style.display = 'none';
+            }
+            
+            viewerTitle.textContent = media.title;
+            viewerDescription.textContent = media.description;
+            
+            // Set download button
+            downloadBtn.onclick = function() {
+                const a = document.createElement('a');
+                a.href = media.url;
+                a.download = media.title || (media.type === 'photos' ? 'image.jpg' : 'video.mp4');
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            };
+            
+            viewer.style.display = 'flex';
+            gsap.from(viewer.querySelector('.viewer-content'), {
+                duration: 0.3,
+                scale: 0.9,
+                opacity: 0,
+                ease: 'back.out(1.7)'
+            });
+            
+            // Close viewer
+            document.querySelector('.close-viewer').onclick = function() {
+                viewer.style.display = 'none';
+                viewerVideo.pause();
+            };
+        }
+        
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            gsap.from(notification, {
+                duration: 0.3,
+                y: 20,
+                opacity: 0,
+                ease: 'power2.out'
+            });
+            
+            setTimeout(() => {
+                gsap.to(notification, {
+                    duration: 0.3,
+                    y: -20,
+                    opacity: 0,
+                    ease: 'power2.in',
+                    onComplete: () => notification.remove()
+                });
+            }, 3000);
+        }
+    </script>
+    <style>
+        /* Main CSS Styles */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .three-d-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        /* Floating Navigation */
+        .floating-nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(45, 52, 54, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 25px;
+            z-index: 100;
+            width: 90%;
+            max-width: 1100px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-text {
+            font-weight: 600;
+            color: var(--light);
+        }
+        
+        .logo-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            opacity: 1;
+            color: var(--primary);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .nav-actions .login-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-actions .login-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+        
+        /* Sections */
+        .section {
+            min-height: 100vh;
+            padding: 100px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section-divider {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+        
+        /* Home Section */
+        .home-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+        
+        .home-text {
+            flex: 1;
+        }
+        
+        .animated-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .name-highlight {
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .name-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(108, 92, 231, 0.3);
+            z-index: -1;
+            border-radius: 5px;
+        }
+        
+        .animated-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--light);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+        
+        .home-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .image-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+        
+        .image-border-animation {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 3px dashed var(--primary);
+            border-radius: 25px;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--light);
+            opacity: 0.7;
+            animation: bounce 2s infinite;
+        }
+        
+        .mouse {
+            width: 25px;
+            height: 40px;
+            border: 2px solid var(--light);
+            border-radius: 15px;
+            position: relative;
+            margin-bottom: 5px;
+        }
+        
+        .mouse::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--light);
+            border-radius: 2px;
+            animation: scroll 2s infinite;
+        }
+        
+        @keyframes scroll {
+            0% { top: 5px; opacity: 1; }
+            100% { top: 20px; opacity: 0; }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        /* Profile Section */
+        .profile-content {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .profile-text {
+            flex: 2;
+        }
+        
+        .profile-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .profile-text p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .skills {
+            margin-top: 30px;
+        }
+        
+        .skills h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .skill-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .skill-bar {
+            margin-bottom: 10px;
+        }
+        
+        .skill-name {
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .skill-progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 4px;
+        }
+        
+        .profile-stats {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Gallery Section */
+        .gallery-content {
+            width: 100%;
+        }
+        
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .filter-btn {
+            background: transparent;
+            color: var(--light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 1 / 1;
+            cursor: pointer;
+        }
+        
+        .gallery-item-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .gallery-item img, .gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img, .gallery-item:hover video {
+            transform: scale(1.05);
+        }
+        
+        .gallery-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+        }
+        
+        .gallery-item-overlay h4 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .gallery-item-overlay p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        
+        .gallery-item-overlay i {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        /* Documents Section */
+        .documents-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .document-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .document-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .document-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(108, 92, 231, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .document-info {
+            flex: 1;
+        }
+        
+        .document-info h4 {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .document-info p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .document-date {
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+        
+        .document-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .download-btn, .view-btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .download-btn:hover {
+            background: var(--secondary);
+        }
+        
+        .view-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+        }
+        
+        .view-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Contact Section */
+        .contact-content {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .contact-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(108, 92, 231, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .info-text h4 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .info-text p {
+            opacity: 0.8;
+        }
+        
+        .contact-form {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(108, 92, 231, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1rem;
+        }
+        
+        .submit-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 50px;
+            padding: 50px 0 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            text-align: center;
+        }
+        
+        .footer-logo span {
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--light);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: var(--dark);
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+        
+        .modal h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary);
+        }
+        
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 90%;
+            max-width: 400px;
+            background: rgba(45, 52, 54, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            z-index: 100;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admin-header h3 {
+            color: var(--primary);
+        }
+        
+        .logout-btn {
+            background: rgba(253, 121, 168, 0.2);
+            color: var(--accent);
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(253, 121, 168, 0.3);
+        }
+        
+        .admin-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 5px;
+        }
+        
+        .admin-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: var(--light);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .admin-tab-content {
+            display: none;
+        }
+        
+        .admin-tab-content.active {
+            display: block;
+        }
+        
+        /* Media Viewer */
+        .media-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .close-viewer {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .close-viewer:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+        
+        .viewer-content {
+            display: flex;
+            flex-direction: column;
+            max-width: 1000px;
+            width: 100%;
+            background: var(--dark);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .viewer-content img, .viewer-content video {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            background: black;
+        }
+        
+        .viewer-info {
+            padding: 20px;
+            background: rgba(45, 52, 54, 0.9);
+        }
+        
+        .viewer-info h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .viewer-info p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .viewer-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .download-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            background: var(--secondary);
+        }
+        
+        /* Notifications */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .notification.error {
+            background: var(--accent);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .home-content, .profile-content, .contact-content {
+                flex-direction: column;
+            }
+            
+            .home-image {
+                order: -1;
+                margin-bottom: 40px;
+            }
+            
+            .image-container {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .animated-title {
+                font-size: 2.5rem;
+            }
+            
+            .profile-stats {
+                grid-template-columns: 1fr;
+                margin-top: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .floating-nav {
+                flex-direction: column;
+                padding: 15px;
+                top: 10px;
+                width: 95%;
+                border-radius: 20px;
+            }
+            
+            .nav-links {
+                margin: 15px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-actions {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .document-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .document-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .animated-title {
+                font-size: 2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content, .admin-panel {
+                width: 95%;
+                padding: 20px 15px;
+            }
+        }
+    </style>
 </body>
 </html>
