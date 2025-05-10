@@ -186,12 +186,12 @@ function initAnimations() {
 function initGallery() {
     // Sample gallery data (in a real app, this would come from a server)
     const galleryData = [
-        { id: 1, type: 'photos', title: 'Nature Photo', description: 'Beautiful nature landscape', url: 'https://via.placeholder.com/800x600', thumbnail: 'https://via.placeholder.com/300x200' },
-        { id: 2, type: 'photos', title: 'City View', description: 'Skyline at night', url: 'https://via.placeholder.com/800x600/333', thumbnail: 'https://via.placeholder.com/300x200/333' },
-        { id: 3, type: 'videos', title: 'Travel Video', description: 'My recent travel adventure', url: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', thumbnail: 'https://via.placeholder.com/300x200/555' },
-        { id: 4, type: 'photos', title: 'Portrait', description: 'Professional portrait shot', url: 'https://via.placeholder.com/600x800', thumbnail: 'https://via.placeholder.com/200x300' },
-        { id: 5, type: 'videos', title: 'Tutorial', description: 'How to use this website', url: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', thumbnail: 'https://via.placeholder.com/300x200/777' },
-        { id: 6, type: 'photos', title: 'Product Shot', description: 'Latest product design', url: 'https://via.placeholder.com/800x600/999', thumbnail: 'https://via.placeholder.com/300x200/999' }
+        { id: 1, type: 'photos', title: 'Nature Photo', description: 'Beautiful nature landscape', url: 'nature.jpg', url: 'nature1.jpg', url: 'nature2.jpg', thumbnail: 'nt.jpg' },
+        { id: 2, type: 'photos', title: 'City View', description: 'Skyline at night', url: 'city.jpg', thumbnail: 'ct.jpg' },
+        { id: 3, type: 'videos', title: 'Travel Video', description: 'My recent travel adventure', url: 'travel.mp4', thumbnail: 'tv.jpg' },
+        { id: 4, type: 'photos', title: 'Portrait', description: 'Professional portrait shot', url: 'portrait.jpg', thumbnail: 'pot.jpg' },
+        { id: 5, type: 'videos', title: 'Tutorial', description: 'How to use this website comming soon...', url: 'tutorial.mp4', thumbnail: 'tt.png' },
+        { id: 6, type: 'photos', title: 'my edits', description: 'Latest edit', url: 'edit.jpg', thumbnail: 'ed.jpg' }
     ];
     
     const galleryGrid = document.querySelector('.gallery-grid');
