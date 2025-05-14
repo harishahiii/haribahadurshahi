@@ -8,10 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 2000);
     
     // Initialize 3D background
-    init3DBackground();
+    initThreeJS();
     
     // Initialize animations
-    initAnimations();
+    initScrollAnimations();
     
     // Initialize gallery
     initGallery();
@@ -27,21 +27,40 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize form submissions
     initForms();
+    
+    // Initialize parallax effect
+    initParallaxEffect();
+    
+    // Initialize scroll reveal
+    initScrollReveal();
 });
 
-function init3DBackground() {
-    const canvas = document.getElementById('bg-canvas');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+// Three.js Background Setup
+let scene, camera, renderer, particles;
+
+function initThreeJS() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer({
+        canvas: document.getElementById('bg-canvas'),
+        alpha: true
+    });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(window.devicePixelRatio);
+    
+    // Add ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+    
+    // Add point light
+    const pointLight = new THREE.PointLight(0xffffff, 1);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
     
     // Create particles
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 500;
-    
+    const particlesCount = 2000;
     const posArray = new Float32Array(particlesCount * 3);
     
     for(let i = 0; i < particlesCount * 3; i++) {
@@ -51,135 +70,205 @@ function init3DBackground() {
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     
     const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.02,
-        color: new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--primary')),
+        size: 0.005,
+        color: 0x2196f3,
         transparent: true,
         opacity: 0.8,
         blending: THREE.AdditiveBlending
     });
     
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
+    particles = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particles);
     
     camera.position.z = 3;
+}
+
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
     
-    // Animation loop
-    function animate() {
-        requestAnimationFrame(animate);
-        
-        particlesMesh.rotation.x += 0.0005;
-        particlesMesh.rotation.y += 0.0005;
-        
-        renderer.render(scene, camera);
+    if (particles) {
+        particles.rotation.x += 0.0005;
+        particles.rotation.y += 0.0005;
     }
     
-    animate();
+    renderer.render(scene, camera);
+}
+
+// Handle window resize
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+// Scroll animations
+function initScrollAnimations() {
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                
+                // Animate skill bars if in profile section
+                if (entry.target.id === 'profile') {
+                    animateSkillBars();
+                }
+            }
+        });
+    }, { threshold: 0.2 });
     
-    // Handle window resize
-    window.addEventListener('resize', function() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+    sections.forEach(section => observer.observe(section));
+}
+
+// Skill bars animation
+function animateSkillBars() {
+    const skillBars = document.querySelectorAll('.skill-progress');
+    skillBars.forEach(bar => {
+        const progress = bar.getAttribute('data-width');
+        const progressBar = bar.querySelector('.progress-bar');
+        progressBar.style.width = progress;
     });
 }
 
-function initAnimations() {
-    // Animate title
-    gsap.from('.animated-title', {
-        duration: 1.5,
-        y: 50,
-        opacity: 0,
-        ease: 'power3.out'
-    });
+// File upload functionality
+function initFileUpload() {
+    const uploadAreas = document.querySelectorAll('.upload-area');
     
-    gsap.from('.animated-subtitle', {
-        duration: 1.5,
-        y: 50,
-        opacity: 0,
-        delay: 0.3,
-        ease: 'power3.out'
+    uploadAreas.forEach(area => {
+        area.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            area.classList.add('dragover');
+        });
+        
+        area.addEventListener('dragleave', () => {
+            area.classList.remove('dragover');
+        });
+        
+        area.addEventListener('drop', (e) => {
+            e.preventDefault();
+            area.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            handleFiles(files, area.getAttribute('data-type'));
+        });
+        
+        // Click to upload
+        area.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = getAcceptedFileTypes(area.getAttribute('data-type'));
+            input.multiple = true;
+            
+            input.onchange = (e) => {
+                handleFiles(e.target.files, area.getAttribute('data-type'));
+            };
+            
+            input.click();
+        });
     });
-    
-    gsap.from('.social-links a', {
-        duration: 1,
-        y: 30,
-        opacity: 0,
-        stagger: 0.1,
-        delay: 0.6,
-        ease: 'back.out'
+}
+
+function getAcceptedFileTypes(type) {
+    switch(type) {
+        case 'image':
+            return 'image/*';
+        case 'video':
+            return 'video/*';
+        case 'document':
+            return '.pdf,.doc,.docx';
+        default:
+            return '*/*';
+    }
+}
+
+function handleFiles(files, type) {
+    Array.from(files).forEach(file => {
+        // Create preview if it's an image or video
+        if (type === 'image' || type === 'video') {
+            createMediaPreview(file, type);
+        } else {
+            // Handle document upload
+            createDocumentItem(file);
+        }
+        
+        // Here you would typically upload the file to a server
+        uploadFile(file);
     });
+}
+
+function createMediaPreview(file, type) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const galleryGrid = document.querySelector('.gallery-grid');
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        
+        if (type === 'image') {
+            item.innerHTML = `<img src="${e.target.result}" alt="${file.name}">`;
+        } else {
+            item.innerHTML = `
+                <video controls>
+                    <source src="${e.target.result}" type="${file.type}">
+                </video>
+            `;
+        }
+        
+        galleryGrid.appendChild(item);
+    };
+    reader.readAsDataURL(file);
+}
+
+function createDocumentItem(file) {
+    const documentsList = document.querySelector('.documents-list');
+    const item = document.createElement('div');
+    item.className = 'document-item';
+    item.innerHTML = `
+        <i class="far fa-file-pdf"></i>
+        <span>${file.name}</span>
+        <small>${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+    `;
+    documentsList.appendChild(item);
+}
+
+function uploadFile(file) {
+    // Implement your file upload logic here
+    console.log(`Uploading file: ${file.name}`);
+}
+
+// Navigation
+function initNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
     
-    gsap.from('.profile-image', {
-        duration: 1.5,
-        scale: 0.8,
-        opacity: 0,
-        delay: 0.3,
-        ease: 'elastic.out(1, 0.5)'
-    });
-    
-    gsap.to('.image-border-animation', {
-        duration: 2,
-        rotation: 360,
-        repeat: -1,
-        ease: 'linear'
-    });
-    
-    // Scroll animations
-    gsap.utils.toArray('.section').forEach(section => {
-        ScrollTrigger.create({
-            trigger: section,
-            start: 'top 80%',
-            onEnter: () => {
-                section.classList.add('active');
-                gsap.from(section.querySelectorAll('h2, h3, p, .section-divider'), {
-                    duration: 1,
-                    y: 50,
-                    opacity: 0,
-                    stagger: 0.1,
-                    ease: 'power3.out'
-                });
-            }
+    // Smooth scroll
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            targetSection.scrollIntoView({ behavior: 'smooth' });
         });
     });
     
-    // Animate skill bars
-    ScrollTrigger.create({
-        trigger: '.skill-bars',
-        start: 'top 80%',
-        onEnter: () => {
-            document.querySelectorAll('.skill-progress').forEach(progress => {
-                const width = progress.getAttribute('data-width');
-                gsap.to(progress.querySelector('.progress-bar'), {
-                    duration: 1.5,
-                    width: width,
-                    ease: 'power3.out'
-                });
-            });
-        }
-    });
-    
-    // Animate stat numbers
-    ScrollTrigger.create({
-        trigger: '.profile-stats',
-        start: 'top 80%',
-        onEnter: () => {
-            document.querySelectorAll('.stat-number').forEach(stat => {
-                const target = parseInt(stat.getAttribute('data-count'));
-                const duration = 2;
-                const start = 0;
-                const increment = target / (duration * 60);
-                
-                let current = start;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        clearInterval(timer);
-                        current = target;
-                    }
-                    stat.textContent = Math.floor(current);
-                }, 1000 / 60);
-            });
-        }
+    // Update active link on scroll
+    window.addEventListener('scroll', () => {
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - sectionHeight / 3) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.add('active');
+            }
+        });
     });
 }
 
@@ -564,3 +653,132 @@ function showNotification(message, type = 'success') {
         });
     }, 3000);
 }
+
+// Particle Animation
+function createParticles() {
+    const particlesContainer = document.createElement('div');
+    particlesContainer.className = 'particles';
+    document.querySelector('.three-d-background').appendChild(particlesContainer);
+
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        
+        // Random starting position
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        
+        // Random size
+        const size = Math.random() * 3 + 1;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        
+        // Random animation duration
+        particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+        
+        // Random delay
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        
+        particlesContainer.appendChild(particle);
+    }
+}
+
+// Initialize particles
+document.addEventListener('DOMContentLoaded', createParticles);
+
+// Mouse parallax effect
+function initParallaxEffect() {
+    const sections = document.querySelectorAll('.section');
+    const cards = document.querySelectorAll('.project-card, .blog-card');
+    const nav = document.querySelector('.floating-nav');
+    
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX - window.innerWidth / 2) * 0.1;
+        mouseY = (e.clientY - window.innerHeight / 2) * 0.1;
+    });
+    
+    function updateParallax() {
+        targetX += (mouseX - targetX) * 0.1;
+        targetY += (mouseY - targetY) * 0.1;
+        
+        // Parallax effect for sections
+        sections.forEach((section) => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                const depth = 0.05;
+                section.style.transform = `
+                    translateX(${targetX * depth}px)
+                    translateY(${targetY * depth}px)
+                    translateZ(0)
+                `;
+            }
+        });
+        
+        // Parallax effect for cards
+        cards.forEach((card) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                const depth = 0.1;
+                card.style.transform = `
+                    translateX(${targetX * depth}px)
+                    translateY(${targetY * depth}px)
+                    translateZ(30px)
+                    rotateX(${-targetY * 0.05}deg)
+                    rotateY(${targetX * 0.05}deg)
+                `;
+            }
+        });
+        
+        // Parallax effect for navigation
+        if (nav) {
+            const depth = 0.02;
+            nav.style.transform = `
+                translateX(${targetX * depth}px)
+                translateY(${targetY * depth}px)
+                translateZ(50px)
+            `;
+        }
+        
+        requestAnimationFrame(updateParallax);
+    }
+    
+    updateParallax();
+}
+
+// Add smooth scroll reveal effect
+function initScrollReveal() {
+    const sections = document.querySelectorAll('.section');
+    const cards = document.querySelectorAll('.project-card, .blog-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0) translateZ(0)';
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+    
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(50px) translateZ(0)';
+        section.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        observer.observe(section);
+    });
+    
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(50px) translateZ(30px)';
+        card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        observer.observe(card);
+    });
+}
+
+window.addEventListener('resize', onWindowResize);
