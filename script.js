@@ -654,6 +654,120 @@ function showNotification(message, type = 'success') {
     }, 3000);
 }
 
+// Performance Optimizer
+const PerformanceOptimizer = {
+    isLowPerformance: false,
+    fpsHistory: [],
+    fpsThreshold: 30,
+    qualityLevels: ['low', 'medium', 'high'],
+    currentQualityLevel: 2, // Start with high quality
+
+    init() {
+        this.checkDeviceCapabilities();
+        this.startFPSMonitoring();
+    },
+
+    checkDeviceCapabilities() {
+        // Check for mobile devices
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            this.isLowPerformance = true;
+            this.currentQualityLevel = 0; // Start with low quality on mobile
+        }
+
+        // Check for hardware concurrency
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) {
+            this.isLowPerformance = true;
+            this.currentQualityLevel = 0;
+        }
+    },
+
+    optimizeRenderer(renderer, canvas) {
+        if (this.isLowPerformance) {
+            renderer.setPixelRatio(1);
+            renderer.setSize(canvas.clientWidth / 2, canvas.clientHeight / 2, false);
+        } else {
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+        }
+    },
+
+    updateFPS() {
+        const now = performance.now();
+        if (!this.lastTime) {
+            this.lastTime = now;
+            return;
+        }
+
+        const delta = now - this.lastTime;
+        this.lastTime = now;
+        const fps = 1000 / delta;
+
+        this.fpsHistory.push(fps);
+        if (this.fpsHistory.length > 60) {
+            this.fpsHistory.shift();
+        }
+
+        const avgFPS = this.fpsHistory.reduce((a, b) => a + b) / this.fpsHistory.length;
+        this.adjustQuality(avgFPS);
+    },
+
+    adjustQuality(avgFPS) {
+        if (avgFPS < this.fpsThreshold && this.currentQualityLevel > 0) {
+            this.currentQualityLevel--;
+            this.applyQualitySettings();
+        } else if (avgFPS > this.fpsThreshold * 1.5 && this.currentQualityLevel < 2) {
+            this.currentQualityLevel++;
+            this.applyQualitySettings();
+        }
+    },
+
+    applyQualitySettings() {
+        // Apply quality settings based on currentQualityLevel
+        // This will be called by individual animation systems
+    },
+
+    disposeObject(obj) {
+        if (obj.geometry) {
+            obj.geometry.dispose();
+        }
+        if (obj.material) {
+            if (Array.isArray(obj.material)) {
+                obj.material.forEach(material => material.dispose());
+            } else {
+                obj.material.dispose();
+            }
+        }
+        if (obj.texture) {
+            obj.texture.dispose();
+        }
+    }
+};
+
+// Initialize PerformanceOptimizer
+document.addEventListener('DOMContentLoaded', () => {
+    PerformanceOptimizer.init();
+});
+
+// Throttle function for performance optimization
+function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+// Smooth scroll function
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
 // Particle Animation
 function createParticles() {
     const particlesContainer = document.createElement('div');
