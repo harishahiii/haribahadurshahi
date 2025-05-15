@@ -6,6 +6,108 @@
     <title>Admin Panel - Hari Shahi</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Messages Styles */
+        .messages-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .message-item.unread {
+            border-left-color: var(--cosmic-teal);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .message-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .message-name {
+            font-weight: 600;
+            color: var(--cosmic-teal);
+        }
+
+        .message-email {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .message-date {
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        .message-content {
+            margin-top: 1rem;
+            line-height: 1.5;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: flex-end;
+        }
+
+        .message-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .mark-read-btn {
+            background: rgba(110, 69, 226, 0.2);
+            color: var(--text-light);
+        }
+
+        .mark-read-btn:hover {
+            background: rgba(110, 69, 226, 0.3);
+        }
+
+        .delete-msg-btn {
+            background: rgba(255, 69, 58, 0.2);
+            color: var(--text-light);
+        }
+
+        .delete-msg-btn:hover {
+            background: rgba(255, 69, 58, 0.3);
+        }
+
+        .unread-count {
+            background: var(--cosmic-teal);
+            color: var(--text-dark);
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
         :root {
             --cosmic-deep: #0a0e23;
             --cosmic-purple: #6e45e2;
@@ -202,6 +304,111 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
+        /* Messages Styles */
+        .messages-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .message-item.unread {
+            border-left-color: var(--cosmic-teal);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .message-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .message-name {
+            font-weight: 600;
+            color: var(--cosmic-teal);
+        }
+
+        .message-email {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .message-date {
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        .message-content {
+            margin-top: 1rem;
+            line-height: 1.5;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: flex-end;
+        }
+
+        .message-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .mark-read-btn {
+            background: rgba(110, 69, 226, 0.2);
+            color: var(--text-light);
+        }
+
+        .mark-read-btn:hover {
+            background: rgba(110, 69, 226, 0.3);
+        }
+
+        .delete-msg-btn {
+            background: rgba(255, 69, 58, 0.2);
+            color: var(--text-light);
+        }
+
+        .delete-msg-btn:hover {
+            background: rgba(255, 69, 58, 0.3);
+        }
+
+        .unread-count {
+            background: var(--cosmic-teal);
+            color: var(--text-dark);
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+            border-color: var(--cosmic-teal);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
         .upload-icon {
             font-size: 2rem;
             color: var(--cosmic-teal);
@@ -217,8 +424,21 @@
     <div class="admin-container">
         <header class="admin-header">
             <h1 class="admin-title">Admin Panel</h1>
-            <button class="logout-btn" onclick="logout()">Logout</button>
+            <div class="header-actions">
+                <span id="unreadCount" class="unread-count" style="display: none;"></span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
         </header>
+
+        <!-- Messages Section -->
+        <section class="admin-section" id="messagesSection">
+            <h2 class="section-title">Messages</h2>
+            <div class="messages-container">
+                <div class="messages-list" id="messagesList">
+                    <!-- Messages will be loaded here -->
+                </div>
+            </div>
+        </section>
 
         <!-- Gallery Section -->
         <section class="admin-section">
@@ -393,9 +613,72 @@
             }
         }
 
+        // Load and display messages
+        function loadMessages() {
+            const messagesList = document.getElementById('messagesList');
+            const unreadCountSpan = document.getElementById('unreadCount');
+            const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            const unreadCount = messages.filter(msg => !msg.read).length;
+
+            // Update unread count
+            if (unreadCount > 0) {
+                unreadCountSpan.textContent = unreadCount;
+                unreadCountSpan.style.display = 'inline-block';
+            } else {
+                unreadCountSpan.style.display = 'none';
+            }
+
+            // Display messages
+            messagesList.innerHTML = messages.length === 0 
+                ? '<p style="text-align: center; opacity: 0.7;">No messages yet</p>'
+                : messages.map(msg => `
+                    <div class="message-item ${msg.read ? '' : 'unread'}" data-id="${msg.id}">
+                        <div class="message-header">
+                            <div class="message-info">
+                                <div class="message-name">${msg.name}</div>
+                                <div class="message-email">${msg.email}</div>
+                                <div class="message-date">${new Date(msg.timestamp).toLocaleString()}</div>
+                            </div>
+                        </div>
+                        <div class="message-content">${msg.message}</div>
+                        <div class="message-actions">
+                            ${!msg.read ? `
+                                <button class="message-btn mark-read-btn" onclick="markAsRead(${msg.id})">
+                                    Mark as Read
+                                </button>
+                            ` : ''}
+                            <button class="message-btn delete-msg-btn" onclick="deleteMessage(${msg.id})">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        // Mark message as read
+        function markAsRead(messageId) {
+            const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            const updatedMessages = messages.map(msg => 
+                msg.id === messageId ? { ...msg, read: true } : msg
+            );
+            localStorage.setItem('contactMessages', JSON.stringify(updatedMessages));
+            loadMessages();
+        }
+
+        // Delete message
+        function deleteMessage(messageId) {
+            if (confirm('Are you sure you want to delete this message?')) {
+                const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+                const updatedMessages = messages.filter(msg => msg.id !== messageId);
+                localStorage.setItem('contactMessages', JSON.stringify(updatedMessages));
+                loadMessages();
+            }
+        }
+
         // Initialize
         checkAuth();
         renderCategories();
+        loadMessages();
     </script>
 </body>
 </html> 
