@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,10 +63,35 @@
         .logo {
             font-size: 1.8rem;
             font-weight: 800;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: 'HS';
+            position: absolute;
             background: linear-gradient(45deg, var(--cosmic-purple), var(--cosmic-teal));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            filter: blur(4px);
+            opacity: 0.7;
+            animation: glowPulse 2s infinite;
+        }
+
+        .logo::after {
+            content: 'HS';
+            background: linear-gradient(45deg, var(--cosmic-purple), var(--cosmic-teal));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { filter: blur(4px); opacity: 0.7; }
+            50% { filter: blur(7px); opacity: 0.9; }
         }
         
         .nav-links {
@@ -495,23 +519,154 @@
             border-radius: 20px;
             padding: 3rem;
             border: 1px solid rgba(110, 69, 226, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         .contact-info-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(110, 69, 226, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0);
+        }
+
+        .contact-info-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(110, 69, 226, 0.1),
+                rgba(17, 216, 198, 0.1)
+            );
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .contact-info-item:hover {
+            transform: translateY(-5px) translateZ(20px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(110, 69, 226, 0.3);
+        }
+
+        .contact-info-item:hover::before {
+            transform: translateX(0);
         }
 
         .contact-info-item i {
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: var(--cosmic-teal);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info-item:hover i {
+            transform: scale(1.2) rotate(360deg);
+            color: var(--cosmic-purple);
+        }
+
+        .contact-info-text {
+            position: relative;
+            z-index: 1;
         }
 
         .contact-info-text h4 {
             color: var(--cosmic-teal);
             margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: color 0.4s ease;
+        }
+
+        .contact-info-item:hover .contact-info-text h4 {
+            color: var(--cosmic-purple);
+        }
+
+        .contact-info-text p {
+            color: var(--text-light);
+            font-size: 1rem;
+            opacity: 0.9;
+            transition: all 0.4s ease;
+        }
+
+        .contact-info-text a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+
+        .contact-info-item:hover .contact-info-text p,
+        .contact-info-item:hover .contact-info-text a {
+            opacity: 1;
+            transform: translateX(10px);
+        }
+
+        /* Glowing dots animation */
+        .contact-info-item::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--cosmic-teal);
+            border-radius: 50%;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 10px var(--cosmic-teal);
+            animation: glowPulse 2s infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                opacity: 0.5;
+                transform: translateY(-50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1.5);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-info {
+                padding: 2rem;
+            }
+
+            .contact-info-item {
+                padding: 1.2rem;
+            }
+
+            .contact-info-item i {
+                font-size: 1.5rem;
+            }
+
+            .contact-info-text h4 {
+                font-size: 1.1rem;
+            }
+
+            .contact-info-text p {
+                font-size: 0.9rem;
+            }
         }
 
         /* Gallery Upload Button */
@@ -858,10 +1013,13 @@
         
         /* Footer - Cosmic Waves */
         footer {
-            background: linear-gradient(to bottom, var(--cosmic-deep) 0%, #000000 100%);
-            padding: 5rem 2rem 2rem;
+            background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.95) 0%,
+                var(--cosmic-deep) 100%
+            );
+            margin-top: 0;  /* Remove margin */
             position: relative;
-            overflow: hidden;
+            z-index: 1;
         }
         
         .footer-wave {
@@ -1223,7 +1381,7 @@
 
         /* Stats Section Styles */
         .stats-section {
-            padding: 4rem 2rem;
+            padding: 6rem 2rem;
             background: linear-gradient(to bottom, var(--cosmic-deep), rgba(0,0,0,0.95));
             position: relative;
             overflow: hidden;
@@ -1234,53 +1392,58 @@
             margin: 0 auto;
             display: flex;
             justify-content: space-around;
-            gap: 2rem;
+            gap: 3rem;
             flex-wrap: wrap;
         }
 
         .stat-box {
             flex: 1;
-            min-width: 250px;
-            max-width: 350px;
-            background: rgba(10, 14, 35, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 2rem;
+            min-width: 280px;
+            max-width: 380px;
+            background: rgba(10, 14, 35, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 3rem 2rem;
+            border-radius: 20px;
             text-align: center;
-            border: 1px solid rgba(110, 69, 226, 0.2);
+            border: 1px solid rgba(110, 69, 226, 0.3);
             position: relative;
             overflow: hidden;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
 
         .stat-box::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, 
-                rgba(110, 69, 226, 0.1), 
-                rgba(17, 216, 198, 0.1));
-            transform: translateX(-100%);
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, 
+                rgba(110, 69, 226, 0.15), 
+                rgba(17, 216, 198, 0.15),
+                transparent 70%);
+            transform: rotate(45deg) translateY(-100%);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .stat-box:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(110, 69, 226, 0.3);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 45px rgba(110, 69, 226, 0.3);
+            border-color: rgba(110, 69, 226, 0.5);
         }
 
         .stat-box:hover::before {
-            transform: translateX(0);
+            transform: rotate(45deg) translateY(0);
         }
 
         .stat-number {
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             font-weight: 800;
-            background: linear-gradient(45deg, var(--cosmic-purple), var(--cosmic-teal));
+            background: linear-gradient(45deg, 
+                var(--cosmic-purple), 
+                var(--cosmic-teal), 
+                var(--cosmic-pink));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -1288,25 +1451,40 @@
             position: relative;
             transform: translateY(20px);
             opacity: 0;
-            animation: slideUpFade 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: slideUpFade 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
         .stat-divider {
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--cosmic-purple), var(--cosmic-teal));
-            margin: 1rem auto;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                var(--cosmic-purple), 
+                var(--cosmic-teal), 
+                var(--cosmic-pink));
+            margin: 1.5rem auto;
             transform: scaleX(0);
-            animation: growWidth 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+            animation: growWidth 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+            border-radius: 2px;
+            box-shadow: 0 2px 10px rgba(110, 69, 226, 0.3);
         }
 
         .stat-text {
-            font-size: 1.2rem;
-            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--cosmic-teal);
+            margin-bottom: 0.5rem;
             position: relative;
             transform: translateY(20px);
             opacity: 0;
-            animation: slideUpFade 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+            animation: slideUpFade 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+        }
+
+        .stat-subtext {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            opacity: 0.8;
+            transform: translateY(20px);
+            animation: slideUpFade 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
         }
 
         @keyframes slideUpFade {
@@ -1322,20 +1500,7 @@
             }
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .stats-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .stat-box {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-
-        /* Add floating particles behind stat boxes */
+        /* Add floating particles effect */
         .stats-section::before {
             content: '';
             position: absolute;
@@ -1344,8 +1509,8 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(circle at center, 
-                rgba(110, 69, 226, 0.1) 0%, 
-                rgba(17, 216, 198, 0.1) 50%, 
+                rgba(110, 69, 226, 0.15) 0%, 
+                rgba(17, 216, 198, 0.15) 50%, 
                 transparent 70%);
             animation: pulse 4s ease-in-out infinite;
         }
@@ -1358,6 +1523,184 @@
             50% {
                 opacity: 1;
                 transform: scale(1.2);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            .stat-box {
+                width: 100%;
+                max-width: 320px;
+                padding: 2rem;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+            }
+
+            .stat-text {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Stats Section 3D Background */
+        #stats-bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .stats-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 3D World Animation Styles */
+        .world-animation-section {
+            height: 40vh;  /* Further reduced height */
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(to bottom, var(--cosmic-deep), #000000);
+            margin: 0;  /* Remove any margins */
+            padding: 0;  /* Remove any padding */
+            border-radius: 0 0 2rem 2rem;  /* Add rounded corners at bottom */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);  /* Add subtle shadow */
+        }
+
+        #world-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .world-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+            width: 100%;
+            padding: 1rem;  /* Reduced from 2rem */
+        }
+
+        .world-title {
+            font-size: 2rem;  /* Further reduced */
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--cosmic-purple), var(--cosmic-teal));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+            text-shadow: 0 0 20px rgba(110, 69, 226, 0.5);  /* Add glow effect */
+        }
+
+        .world-subtitle {
+            font-size: 1.2rem;  /* Reduced from 1.8rem */
+            color: var(--text-light);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.8s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .world-title {
+                font-size: 2rem;  /* Reduced from 2.5rem */
+            }
+            .world-subtitle {
+                font-size: 1rem;  /* Reduced from 1.2rem */
+            }
+        }
+
+        /* Remove Logo Animation Section styles */
+        .logo-animation-section {
+            display: none;
+        }
+
+        #logo-canvas {
+            display: none;
+        }
+
+        .logo-overlay {
+            display: none;
+        }
+
+        .logo-text {
+            display: none;
+        }
+
+        /* Final 3D Animation Section */
+        .final-animation-section {
+            position: relative;
+            height: 100vh;  /* Full height by default */
+            overflow: hidden;
+            background: var(--cosmic-deep);
+            margin: 0;
+            padding: 0;
+            z-index: 1;
+        }
+
+        .final-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            padding: 1rem;  /* Add some padding for smallest screens */
+        }
+
+        .final-title {
+            font-size: 1.8rem;  /* Base size for mobile */
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--cosmic-purple), var(--cosmic-teal));
+            }
+
+            .final-subtitle {
+                font-size: 0.9rem;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .final-title {
+                font-size: 1.6rem;
+            }
+
+            .final-subtitle {
+                font-size: 0.85rem;
+                max-width: 250px;
+            }
+
+            .final-animation-section::before,
+            .final-animation-section::after {
+                height: 100px;  /* Reduced gradient height for mobile */
             }
         }
     </style>
@@ -1401,24 +1744,34 @@
 
     <!-- Stats Section -->
     <section class="stats-section">
+        <canvas id="stats-bg-canvas"></canvas>
         <div class="stats-container">
             <div class="stat-box">
-               
-                 <div class="stat-text">NAMASKAR</div>
- <div class="stat-divider"></div>
-                 <div class="stat-text">SWAGAT CHHA</div>
+                <div class="stat-number">नमस्कार</div>
+                <div class="stat-divider"></div>
+                <div class="stat-text">स्वागत छ</div>
             </div>
             <div class="stat-box">
-                <div class="stat-text">Studying BE-IT</div>
+                <div class="stat-number">BE-IT</div>
                 <div class="stat-divider"></div>
-<div class="stat-number">2</div>
-                <div class="stat-text">Semester</div>11:30 PM 5/14/2025
+                <div class="stat-text">2nd Semester</div>
+                <div class="stat-subtext">Class of 2025</div>
             </div>
             <div class="stat-box">
-               <div class="stat-text">projects</div>
+                <div class="stat-number">10+</div>
                 <div class="stat-divider"></div>
-                <div class="stat-text">comming soon...</div
+                <div class="stat-text">Projects</div>
+                <div class="stat-subtext">Coming Soon</div>
             </div>
+        </div>
+    </section>
+
+    <!-- 3D World Animation Section -->
+    <section class="world-animation-section">
+        <canvas id="world-canvas"></canvas>
+        <div class="world-overlay">
+            <h2 class="world-title">Exploring Creativity Worldwide</h2>
+            <p class="world-subtitle">Creating Digital Experiences Across the Globe</p>
         </div>
     </section>
 
@@ -1651,7 +2004,7 @@
                         <i class="fas fa-envelope"></i>
                         <div class="contact-info-text">
                             <h4>Email</h4>
-                            <p>harishahi909@gmail.com</p>
+                            <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="98f0f9eaf1ebf0f9f0f1a1a8a1d8fff5f9f1f4b6fbf7f5">[email&#160;protected]</a></p>
                         </div>
                     </div>
                     <div class="contact-info-item">
@@ -1685,6 +2038,15 @@
                     <button type="submit" class="submit-btn">Send Message</button>
                 </form>
             </div>
+        </div>
+    </section>
+
+    <!-- Final 3D Animation Section -->
+    <section class="final-animation-section">
+        <canvas id="final-canvas"></canvas>
+        <div class="final-content">
+            <h2 class="final-title">Let's Create Something Amazing</h2>
+            <p class="final-subtitle">Together, we can bring your vision to life with cutting-edge creativity and innovation</p>
         </div>
     </section>
 
@@ -1730,7 +2092,7 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Three.js Background
         function initThreeJS() {
             const container = document.getElementById('threejs-bg');
@@ -1991,6 +2353,8 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initThreeJS();
+            initStatsBackground();
+            initWorldAnimation();
             rotateRoles();
             setInterval(rotateRoles, 3000);
             
@@ -2230,6 +2594,745 @@
                 box.style.transform = 'translateY(50px)';
                 observer.observe(box);
             });
+        });
+
+        // Stats Background Animation
+        function initStatsBackground() {
+            const canvas = document.getElementById('stats-bg-canvas');
+            const renderer = new THREE.WebGLRenderer({
+                canvas,
+                alpha: true,
+                antialias: true
+            });
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Handle resize
+            function resizeCanvas() {
+                const container = canvas.parentElement;
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                
+                renderer.setSize(width, height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            // Create floating objects
+            const objects = [];
+            const objectsCount = 50;
+
+            // Geometry variations
+            const geometries = [
+                new THREE.TorusGeometry(0.3, 0.1, 16, 32),
+                new THREE.OctahedronGeometry(0.3),
+                new THREE.TetrahedronGeometry(0.3)
+            ];
+
+            // Material with gradient
+            const gradientTexture = new THREE.TextureLoader().load('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhJREFUeNpi+M/A8J+BAQgYGBgZQIABAAp1AgEGqvyxAAAAAElFTkSuQmCC');
+            
+            const materials = [
+                new THREE.MeshPhongMaterial({
+                    color: 0x6e45e2,
+                    shininess: 100,
+                    transparent: true,
+                    opacity: 0.6,
+                    side: THREE.DoubleSide
+                }),
+                new THREE.MeshPhongMaterial({
+                    color: 0x11d8c6,
+                    shininess: 100,
+                    transparent: true,
+                    opacity: 0.6,
+                    side: THREE.DoubleSide
+                })
+            ];
+
+            // Add ambient and point lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const pointLight = new THREE.PointLight(0x6e45e2, 1);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+
+            const pointLight2 = new THREE.PointLight(0x11d8c6, 1);
+            pointLight2.position.set(-5, -5, 5);
+            scene.add(pointLight2);
+
+            // Create objects
+            for (let i = 0; i < objectsCount; i++) {
+                const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+                const material = materials[Math.floor(Math.random() * materials.length)];
+                const mesh = new THREE.Mesh(geometry, material);
+
+                // Random position
+                mesh.position.x = (Math.random() - 0.5) * 10;
+                mesh.position.y = (Math.random() - 0.5) * 10;
+                mesh.position.z = (Math.random() - 0.5) * 5;
+
+                // Random rotation
+                mesh.rotation.x = Math.random() * Math.PI;
+                mesh.rotation.y = Math.random() * Math.PI;
+
+                // Add animation properties
+                mesh.userData.rotationSpeed = {
+                    x: (Math.random() - 0.5) * 0.02,
+                    y: (Math.random() - 0.5) * 0.02
+                };
+                mesh.userData.floatSpeed = Math.random() * 0.01;
+                mesh.userData.floatOffset = Math.random() * Math.PI * 2;
+
+                objects.push(mesh);
+                scene.add(mesh);
+            }
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const time = Date.now() * 0.001;
+
+                objects.forEach(obj => {
+                    // Rotation
+                    obj.rotation.x += obj.userData.rotationSpeed.x;
+                    obj.rotation.y += obj.userData.rotationSpeed.y;
+
+                    // Floating motion
+                    obj.position.y += Math.sin(time + obj.userData.floatOffset) * obj.userData.floatSpeed;
+                    obj.position.x += Math.cos(time + obj.userData.floatOffset) * obj.userData.floatSpeed * 0.5;
+
+                    // Keep objects in bounds
+                    if (Math.abs(obj.position.y) > 5) {
+                        obj.position.y = Math.sign(obj.position.y) * 5;
+                    }
+                    if (Math.abs(obj.position.x) > 5) {
+                        obj.position.x = Math.sign(obj.position.x) * 5;
+                    }
+                });
+
+                // Rotate camera slightly based on mouse position
+                const mouseX = (window.innerWidth / 2 - (window.mouseX || 0)) * 0.0002;
+                const mouseY = (window.innerHeight / 2 - (window.mouseY || 0)) * 0.0002;
+                camera.rotation.x += (mouseY - camera.rotation.x) * 0.05;
+                camera.rotation.y += (mouseX - camera.rotation.y) * 0.05;
+
+                renderer.render(scene, camera);
+            }
+
+            // Track mouse position
+            window.addEventListener('mousemove', (event) => {
+                window.mouseX = event.clientX;
+                window.mouseY = event.clientY;
+            });
+
+            animate();
+        }
+
+        // Initialize the stats background when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initStatsBackground();
+            // ... rest of your existing DOMContentLoaded handlers ...
+        });
+
+        // 3D World Animation
+        function initWorldAnimation() {
+            const canvas = document.getElementById('world-canvas');
+            const renderer = new THREE.WebGLRenderer({
+                canvas,
+                antialias: true,
+                alpha: true
+            });
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 15;
+
+            // Create Earth sphere
+            const earthGeometry = new THREE.SphereGeometry(5, 64, 64);
+            
+            // Create atmosphere
+            const atmosphereGeometry = new THREE.SphereGeometry(5.3, 64, 64);
+            const atmosphereMaterial = new THREE.ShaderMaterial({
+                vertexShader: `
+                    varying vec3 vertexNormal;
+                    varying vec3 vPosition;
+                    void main() {
+                        vertexNormal = normalize(normalMatrix * normal);
+                        vPosition = position;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    varying vec3 vertexNormal;
+                    varying vec3 vPosition;
+                    void main() {
+                        float intensity = pow(0.7 - dot(vertexNormal, vec3(0.0, 0.0, 1.0)), 2.0);
+                        vec3 atmosphere = mix(vec3(0.3, 0.6, 1.0), vec3(0.6, 0.1, 0.9), intensity);
+                        gl_FragColor = vec4(atmosphere, intensity * 0.5);
+                    }
+                `,
+                blending: THREE.AdditiveBlending,
+                side: THREE.BackSide,
+                transparent: true
+            });
+
+            const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+            scene.add(atmosphere);
+
+            // Create point particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 5000;
+            const posArray = new Float32Array(particlesCount * 3);
+            
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 50;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x6e45e2,
+                blending: THREE.AdditiveBlending,
+                transparent: true
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            // Create Earth material with gradient and shine
+            const earthMaterial = new THREE.ShaderMaterial({
+                vertexShader: `
+                    varying vec2 vUv;
+                    varying vec3 vNormal;
+                    varying vec3 vPosition;
+                    varying vec3 vViewPosition;
+                    varying vec3 vWorldNormal;
+                    
+                    void main() {
+                        vUv = uv;
+                        vNormal = normalize(normalMatrix * normal);
+                        vPosition = position;
+                        vWorldNormal = (modelMatrix * vec4(normal, 0.0)).xyz;
+                        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                        vViewPosition = -mvPosition.xyz;
+                        gl_Position = projectionMatrix * mvPosition;
+                    }
+                `,
+                fragmentShader: `
+                    varying vec2 vUv;
+                    varying vec3 vNormal;
+                    varying vec3 vPosition;
+                    varying vec3 vViewPosition;
+                    varying vec3 vWorldNormal;
+                    uniform float time;
+
+                    // Noise functions
+                    float hash(vec2 p) {
+                        float h = dot(p, vec2(127.1, 311.7));
+                        return fract(sin(h) * 43758.5453123);
+                    }
+
+                    float noise(vec2 p) {
+                        vec2 i = floor(p);
+                        vec2 f = fract(p);
+                        f = f * f * (3.0 - 2.0 * f);
+                        float a = hash(i);
+                        float b = hash(i + vec2(1.0, 0.0));
+                        float c = hash(i + vec2(0.0, 1.0));
+                        float d = hash(i + vec2(1.0, 1.0));
+                        return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+                    }
+
+                    float voronoi(vec2 x) {
+                        vec2 p = floor(x);
+                        vec2 f = fract(x);
+                        float res = 8.0;
+                        for(int j = -1; j <= 1; j++) {
+                            for(int i = -1; i <= 1; i++) {
+                                vec2 b = vec2(i, j);
+                                vec2 r = b - f + hash(p + b);
+                                float d = dot(r, r);
+                                res = min(res, d);
+                            }
+                        }
+                        return sqrt(res);
+                    }
+
+                    void main() {
+                        vec3 viewDirection = normalize(vViewPosition);
+                        
+                        // Space colors
+                        vec3 deepSpace = vec3(0.02, 0.02, 0.05);
+                        vec3 nebulaColor1 = vec3(0.7, 0.2, 0.8);  // Purple
+                        vec3 nebulaColor2 = vec3(0.2, 0.5, 1.0);  // Blue
+                        vec3 starColor = vec3(1.0, 0.95, 0.8);    // Warm star color
+                        
+                        // Create base nebula pattern
+                        float nebula1 = fbm(vUv * 3.0 + time * 0.1);
+                        float nebula2 = fbm(vUv * 2.0 - time * 0.05);
+                        
+                        // Star field creation
+                        float stars = 0.0;
+                        for(float i = 0.0; i < 3.0; i++) {
+                            vec2 starPos = vUv * (20.0 + i * 30.0);
+                            float star = step(0.98, noise(starPos + time * (0.1 + i * 0.1)));
+                            float glow = step(0.90, noise(starPos + time * (0.1 + i * 0.1)));
+                            stars += star + glow * 0.3;
+                        }
+                        
+                        // Create cosmic dust
+                        float dust = fbm(vUv * 5.0 + time * 0.02) * 0.5;
+                        
+                        // Create energy waves
+                        float energy = sin(vUv.x * 10.0 + time) * sin(vUv.y * 10.0 + time * 0.5);
+                        energy = pow(abs(energy), 3.0);
+                        
+                        // Create galaxy spiral
+                        vec2 center = vUv * 2.0 - 1.0;
+                        float angle = atan(center.y, center.x);
+                        float radius = length(center);
+                        float spiral = sin(angle * 3.0 + radius * 10.0 - time * 0.5);
+                        spiral = smoothstep(0.0, 1.0, spiral);
+                        
+                        // Combine nebula colors
+                        vec3 nebulaColor = mix(
+                            nebulaColor1,
+                            nebulaColor2,
+                            nebula1 * nebula2
+                        );
+                        
+                        // Create final space color
+                        vec3 spaceColor = deepSpace;
+                        spaceColor += nebulaColor * (nebula1 * 0.4 + nebula2 * 0.4);
+                        spaceColor += starColor * stars;
+                        spaceColor += nebulaColor * dust * 0.3;
+                        spaceColor += mix(nebulaColor1, nebulaColor2, energy) * energy * 0.2;
+                        spaceColor += starColor * spiral * 0.15;
+                        
+                        // Add cosmic glow
+                        float fresnel = pow(1.0 - dot(vNormal, viewDirection), 3.0);
+                        spaceColor += mix(nebulaColor1, nebulaColor2, fresnel) * fresnel * 0.3;
+                        
+                        // Add subtle pulsing
+                        float pulse = sin(time) * 0.5 + 0.5;
+                        spaceColor *= 0.8 + pulse * 0.2;
+                        
+                        // Add atmospheric scatter
+                        float scatter = pow(1.0 - dot(vNormal, viewDirection), 2.0);
+                        spaceColor += vec3(0.1, 0.2, 0.5) * scatter * 0.3;
+                        
+                        gl_FragColor = vec4(spaceColor, 1.0);
+                    }
+
+                    // Fractal Brownian Motion for nebula effect
+                    float fbm(vec2 p) {
+                        float value = 0.0;
+                        float amplitude = 0.5;
+                        float frequency = 1.0;
+                        for(int i = 0; i < 6; i++) {
+                            value += amplitude * noise(p * frequency);
+                            frequency *= 2.0;
+                            amplitude *= 0.5;
+                        }
+                        return value;
+                    }
+                `,
+                uniforms: {
+                    time: { value: 0 }
+                }
+            });
+
+            const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+            scene.add(earth);
+
+            // Add ambient and directional lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 3, 5);
+            scene.add(directionalLight);
+
+            // Mouse tracking
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetRotationX = 0;
+            let targetRotationY = 0;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+            });
+
+            // Handle resize
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+            window.addEventListener('resize', onWindowResize);
+            onWindowResize();
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Update uniforms
+                earthMaterial.uniforms.time.value = performance.now() * 0.001;
+
+                // Smooth rotation based on mouse position
+                targetRotationY += (mouseX * 0.5 - targetRotationY) * 0.05;
+                targetRotationX += (mouseY * 0.5 - targetRotationX) * 0.05;
+
+                earth.rotation.y += 0.001;
+                earth.rotation.x = targetRotationX * 0.5;
+                earth.rotation.y = targetRotationY * 2;
+
+                atmosphere.rotation.copy(earth.rotation);
+
+                // Animate particles
+                particlesMesh.rotation.y += 0.0005;
+                particlesMesh.rotation.x += 0.0002;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+        }
+
+        // Initialize both animations when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initWorldAnimation();
+            // ... rest of your existing initializations ...
+        });
+
+        // Add this to your existing JavaScript, before other script code
+        function initLogoAnimation() {
+            const canvas = document.getElementById('logo-canvas');
+            const renderer = new THREE.WebGLRenderer({
+                canvas,
+                antialias: true,
+                alpha: true
+            });
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Create organic shape
+            const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
+            
+            // Create material with custom shader
+            const material = new THREE.ShaderMaterial({
+                vertexShader: `
+                    varying vec3 vNormal;
+                    varying vec3 vPosition;
+                    
+                    void main() {
+                        vNormal = normalize(normalMatrix * normal);
+                        vPosition = position;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    varying vec3 vNormal;
+                    varying vec3 vPosition;
+                    uniform float time;
+                    
+                    void main() {
+                        // Create organic color gradient
+                        vec3 color1 = vec3(0.43, 0.27, 0.89); // Cosmic purple
+                        vec3 color2 = vec3(0.07, 0.85, 0.78); // Cosmic teal
+                        
+                        // Add wave pattern
+                        float wave = sin(vPosition.x * 5.0 + time) * 
+                                   sin(vPosition.y * 5.0 + time) * 
+                                   sin(vPosition.z * 5.0 + time);
+                        
+                        // Create organic pattern
+                        float pattern = abs(sin(vPosition.x * 10.0 + time) * 
+                                         sin(vPosition.y * 10.0 + time) * 
+                                         sin(vPosition.z * 10.0 + time));
+                        
+                        // Mix colors based on pattern and wave
+                        vec3 finalColor = mix(color1, color2, pattern + wave * 0.5);
+                        
+                        // Add rim lighting
+                        float rimLight = 1.0 - max(dot(vNormal, vec3(0.0, 0.0, 1.0)), 0.0);
+                        rimLight = pow(rimLight, 3.0);
+                        
+                        finalColor += vec3(1.0) * rimLight * 0.5;
+                        
+                        gl_FragColor = vec4(finalColor, 1.0);
+                    }
+                `,
+                uniforms: {
+                    time: { value: 0 }
+                }
+            });
+
+            const logo = new THREE.Mesh(geometry, material);
+            scene.add(logo);
+
+            // Add ambient light
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            // Add point lights
+            const pointLight1 = new THREE.PointLight(0x6e45e2, 1);
+            pointLight1.position.set(5, 5, 5);
+            scene.add(pointLight1);
+
+            const pointLight2 = new THREE.PointLight(0x11d8c6, 1);
+            pointLight2.position.set(-5, -5, 5);
+            scene.add(pointLight2);
+
+            // Mouse interaction
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetRotationX = 0;
+            let targetRotationY = 0;
+
+            canvas.addEventListener('mousemove', (event) => {
+                const rect = canvas.getBoundingClientRect();
+                mouseX = ((event.clientX - rect.left) / canvas.clientWidth) * 2 - 1;
+                mouseY = -((event.clientY - rect.top) / canvas.clientHeight) * 2 + 1;
+            });
+
+            // Handle resize
+            function onResize() {
+                const container = canvas.parentElement;
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                
+                renderer.setSize(width, height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            }
+            window.addEventListener('resize', onResize);
+            onResize();
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Update time uniform
+                material.uniforms.time.value = performance.now() * 0.001;
+
+                // Smooth rotation based on mouse position
+                targetRotationY += (mouseX * 2 - targetRotationY) * 0.05;
+                targetRotationX += (mouseY * 2 - targetRotationX) * 0.05;
+
+                logo.rotation.x = targetRotationX;
+                logo.rotation.y = targetRotationY;
+
+                // Natural floating motion
+                logo.position.y = Math.sin(performance.now() * 0.001) * 0.1;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+        }
+
+        // Initialize logo animation with other animations
+        document.addEventListener('DOMContentLoaded', () => {
+            initLogoAnimation();
+            initThreeJS();
+            initStatsBackground();
+            initWorldAnimation();
+            // ... rest of your existing initializations ...
+        });
+
+        // Final 3D Animation
+        function initFinalAnimation() {
+            const canvas = document.getElementById('final-canvas');
+            const renderer = new THREE.WebGLRenderer({
+                canvas,
+                antialias: true,
+                alpha: true
+            });
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Create galaxy particles
+            const galaxyGeometry = new THREE.BufferGeometry();
+            const galaxyMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                vertexColors: true,
+                blending: THREE.AdditiveBlending,
+                transparent: true
+            });
+
+            const particleCount = 10000;
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const scales = new Float32Array(particleCount);
+
+            const colorPalette = [
+                new THREE.Color(0x6e45e2), // Cosmic Purple
+                new THREE.Color(0xb845d3), // Cosmic Pink
+                new THREE.Color(0x2d8df8), // Cosmic Blue
+                new THREE.Color(0x11d8c6)  // Cosmic Teal
+            ];
+
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                const radius = Math.random() * 5;
+                const spinAngle = radius * 5;
+                const branchAngle = (i % 3) * Math.PI * 2 / 3;
+
+                const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1);
+                const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1);
+                const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1);
+
+                positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
+                positions[i3 + 1] = randomY;
+                positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+
+                const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+                colors[i3] = color.r;
+                colors[i3 + 1] = color.g;
+                colors[i3 + 2] = color.b;
+
+                scales[i] = Math.random();
+            }
+
+            galaxyGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            galaxyGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            galaxyGeometry.setAttribute('scale', new THREE.BufferAttribute(scales, 1));
+
+            const galaxy = new THREE.Points(galaxyGeometry, galaxyMaterial);
+            scene.add(galaxy);
+
+            // Add cosmic dust
+            const dustGeometry = new THREE.BufferGeometry();
+            const dustMaterial = new THREE.PointsMaterial({
+                size: 0.01,
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.5,
+                blending: THREE.AdditiveBlending
+            });
+
+            const dustCount = 5000;
+            const dustPositions = new Float32Array(dustCount * 3);
+
+            for (let i = 0; i < dustCount * 3; i += 3) {
+                dustPositions[i] = (Math.random() - 0.5) * 10;
+                dustPositions[i + 1] = (Math.random() - 0.5) * 10;
+                dustPositions[i + 2] = (Math.random() - 0.5) * 10;
+            }
+
+            dustGeometry.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
+            const dust = new THREE.Points(dustGeometry, dustMaterial);
+            scene.add(dust);
+
+            // Add nebula effect
+            const nebulaGeometry = new THREE.IcosahedronGeometry(4, 4);
+            const nebulaMaterial = new THREE.ShaderMaterial({
+                vertexShader: `
+                    varying vec3 vPosition;
+                    varying vec3 vNormal;
+                    
+                    void main() {
+                        vPosition = position;
+                        vNormal = normal;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    varying vec3 vPosition;
+                    varying vec3 vNormal;
+                    uniform float time;
+                    
+                    float noise(vec3 p) {
+                        return fract(sin(dot(p, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
+                    }
+                    
+                    void main() {
+                        float n = noise(vPosition + time);
+                        vec3 color1 = vec3(0.43, 0.27, 0.89); // Purple
+                        vec3 color2 = vec3(0.07, 0.85, 0.78); // Teal
+                        vec3 finalColor = mix(color1, color2, n);
+                        
+                        float opacity = smoothstep(0.4, 0.5, n);
+                        gl_FragColor = vec4(finalColor, opacity * 0.3);
+                    }
+                `,
+                uniforms: {
+                    time: { value: 0 }
+                },
+                transparent: true,
+                blending: THREE.AdditiveBlending
+            });
+
+            const nebula = new THREE.Mesh(nebulaGeometry, nebulaMaterial);
+            scene.add(nebula);
+
+            // Mouse interaction
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetRotationX = 0;
+            let targetRotationY = 0;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            // Handle resize
+            function onResize() {
+                const width = canvas.clientWidth;
+                const height = canvas.clientHeight;
+                
+                renderer.setSize(width, height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            }
+
+            window.addEventListener('resize', onResize);
+            onResize();
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Update nebula
+                nebulaMaterial.uniforms.time.value = performance.now() * 0.001;
+
+                // Rotate based on mouse position
+                targetRotationY += (mouseX * 0.5 - targetRotationY) * 0.05;
+                targetRotationX += (mouseY * 0.5 - targetRotationX) * 0.05;
+
+                galaxy.rotation.y += 0.001;
+                dust.rotation.y += 0.0005;
+                nebula.rotation.y += 0.0002;
+
+                galaxy.rotation.x = targetRotationX * 0.5;
+                galaxy.rotation.y = targetRotationY * 2;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+        }
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+            initStatsBackground();
+            initWorldAnimation();
+            initFinalAnimation();
+            // ... rest of your existing initializations ...
         });
     </script>
 </body>
