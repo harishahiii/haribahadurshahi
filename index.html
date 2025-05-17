@@ -177,6 +177,47 @@
             margin-bottom: 3rem;
         }
         
+        .profile-social-icons {
+            position: absolute;
+            display: flex;
+            gap: 1rem;
+            top: 50%;
+            left: calc(100% + 1rem);
+            transform: translateY(-50%);
+        }
+        
+        .profile-social-icons a {
+            color: var(--cosmic-teal);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            background: rgba(10, 14, 35, 0.7);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(110, 69, 226, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        .profile-social-icons a:hover {
+            color: white;
+            transform: translateY(-5px);
+            background: linear-gradient(45deg, var(--cosmic-purple), var(--cosmic-teal));
+            border-color: transparent;
+            box-shadow: 0 5px 15px rgba(110, 69, 226, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .profile-social-icons {
+                position: relative;
+                left: 0;
+                top: 1rem;
+                justify-content: center;
+            }
+        }
+        
         .profile-pic {
             width: 200px;
             height: 200px;
@@ -1145,6 +1186,11 @@
         @keyframes shine {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
         
         /* Projects Section - 3D Carousel */
@@ -2362,6 +2408,8 @@
                 <a href="https://www.youtube.com/@Traveller827" target="_blank"><i class="fab fa-youtube"></i></a>
                 <a href="https://tiktok.com/@harishahii" target="_blank"><i class="fab fa-tiktok"></i></a>
                 <a href="https://instagram.com/harishahi2" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://github.com/harishahiii" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.linkedin.com/in/hari-shahi-2a567b35b/" target="_blank"><i class="fab fa-github"></i></a>
             </div>
         </div>
         <h1>Hari Shahi</h1>
@@ -2654,7 +2702,7 @@
                     </div>
                 </div>
                 <div class="project-card">
-                    <img src="ap.jpg" alt="Nature Photography" class="project-img">
+                    <img src="ap.png" alt="Nature Photography" class="project-img">
                     <div class="project-info">
                         <h3>Animal Photography</h3>
                         <p>Full-day coverage for a destination in the Himalayas.</p>
@@ -2686,42 +2734,42 @@
             <div class="gallery">
                 <!-- Default Gallery Items - These will always be present -->
                 <div class="gallery-item default-item">
-                    <img src="np.jpg" alt="Nature Photo" class="gallery-img">
+                    <img src="np.png" alt="Nature Photo" class="gallery-img">
                     <div class="gallery-caption">
                         <h3>Beautiful Nature</h3>
                         <p>2023-05-15</p>
                     </div>
                 </div>
                 <div class="gallery-item default-item">
-                    <img src="cv.jpg" alt="City View" class="gallery-img">
+                    <img src="cv.png" alt="City View" class="gallery-img">
                     <div class="gallery-caption">
                         <h3>City Skyline</h3>
                         <p>2023-06-20</p>
                     </div>
                 </div>
                 <div class="gallery-item default-item">
-                    <img src="portraits.jpg" alt="Portrait" class="gallery-img">
+                    <img src="portraits.png" alt="Portrait" class="gallery-img">
                     <div class="gallery-caption">
                         <h3>Professional Portrait</h3>
                         <p>2023-04-10</p>
                     </div>
                 </div>
                 <div class="gallery-item default-item">
-                    <img src="ta.jpg" alt="Travel Adventure" class="gallery-img">
+                    <img src="ta.png" alt="Travel Adventure" class="gallery-img">
                     <div class="gallery-caption">
                         <h3>Travel Adventure</h3>
                         <p>2023-07-15</p>
                     </div>
                 </div>
                 <div class="gallery-item default-item">
-                    <img src="ps.jpg" alt="Product Shoot" class="gallery-img">
+                    <img src="ps.png" alt="Product Shoot" class="gallery-img">
                     <div class="gallery-caption">
                         <h3>Product Shoot</h3>
                         <p>2023-03-22</p>
                     </div>
                 </div>
                 <div class="gallery-item default-item">
-                    <img src="eg.jpg" alt="Event Glimpse" class="gallery-img">
+                    <img src="eg.png" alt="Event Glimpse" class="gallery-img">
                     <div class="gallery-caption">
                         <h3>Event Coverage</h3>
                         <p>2023-08-05</p>
@@ -2866,6 +2914,9 @@
     <section class="final-animation-section">
         <canvas id="final-canvas"></canvas>
         <div class="final-content">
+            <div class="profile-container" style="margin-bottom: 2rem;">
+                <img src="profile2.png" alt="Hari Shahi" class="profile-pic" style="animation: float 3s ease-in-out infinite;">
+            </div>
             <h2 class="final-title">Step Into The Digital Universe</h2>
             <p class="final-subtitle">Where Technology Meets Artistry - Let's Create Something Extraordinary Together</p>
         </div>
@@ -3180,7 +3231,7 @@
             setInterval(rotateRoles, 3000);
             
             // GSAP Animations
-            gsap.registerPlugin(ScrollTrigger);
+            gsap.risterPlugin(ScrollTrigger);
             
             // Section animations
             gsap.utils.toArray('section').forEach(section => {
