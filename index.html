@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2378,6 +2380,99 @@
                 font-size: 1rem;
             }
         }
+
+        /* Coffee Cup Button */
+        .coffee-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--cosmic-purple);
+            color: white;
+            font-size: 2rem;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 0 10px rgba(110, 69, 226, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .coffee-btn:hover {
+            transform: scale(1.2);
+            color: var(--cosmic-purple);
+        }
+
+        /* Coffee Modal */
+        .coffee-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .coffee-modal .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            background: rgba(10, 14, 35, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .coffee-modal .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .coffee-modal .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        .coffee-modal .modal-body {
+            margin-top: 2rem;
+        }
+
+        .coffee-modal h2 {
+            font-size: 2rem;
+            color: var(--cosmic-teal);
+            margin-bottom: 1rem;
+        }
+
+        .coffee-modal .coffee-gif {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        .coffee-modal p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        /* Responsive adjustments for coffee modal */
+        @media (max-width: 768px) {
+            .coffee-modal .modal-content {
+                width: 90%;
+                max-width: 350px;
+                padding: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2427,9 +2522,9 @@
         <canvas id="stats-bg-canvas"></canvas>
         <div class="stats-container">
             <div class="stat-box">
-                <div class="stat-number">HEHE MA</div>
+                <div class="stat-number">I AM A</div>
                 <div class="stat-divider"></div>
-                <div class="stat-text">HARIBAHADUR</div>
+                <div class="stat-text">STUDENT</div>
             </div>
             <div class="stat-box">
 <div class="stat-subtext">studying</div>
@@ -2610,7 +2705,7 @@
                         </div>
                     </div>
                     <div class="about-image-right">
-                        <img src="experience.jpg" alt="Professional Experience" loading="lazy">
+                        <img src="experience.png" alt="Professional Experience" loading="lazy">
                     </div>
                 </div>
                 <div class="about-grid">
@@ -2691,10 +2786,10 @@
             <h2>My Activities</h2>
             <div class="projects-grid">
                 <div class="project-card">
-                    <img src="cvs.jpg" alt="Corporate Video Series" class="project-img">
+                    <img src="cvs.png" alt="Corporate Video Series" class="project-img">
                     <div class="project-info">
-                        <h3>Corporate Video Series</h3>
-                        <p>A series of promotional videos for a tech startup highlighting their innovative products.</p>
+                        <h3>From Cuts to Creativity</h3>
+                        <p>A team huddle to refine editing techniques and push creative boundaries in motion graphics.</p>
                         <div class="project-tags">
                             <span class="project-tag">Video Editing</span>
                             <span class="project-tag">Motion Graphics</span>
@@ -2705,7 +2800,7 @@
                     <img src="ap.png" alt="Nature Photography" class="project-img">
                     <div class="project-info">
                         <h3>Animal Photography</h3>
-                        <p>Full-day coverage for a destination in the Himalayas.</p>
+                        <p>Capturing the beauty, emotion, and wild spirit of animals through the lens.</p>
                         <div class="project-tags">
                             <span class="project-tag">Photography</span>
                             <span class="project-tag">Portrait</span>
@@ -2713,10 +2808,10 @@
                     </div>
                 </div>
                 <div class="project-card">
-                    <img src="portrait.jpg" alt="portraits" class="project-img">
+                    <img src="portrait.png" alt="portraits" class="project-img">
                     <div class="project-info">
-                        <h3>Portraits</h3>
-                        <p>Custom website for a fashion photographer with interactive gallery.</p>
+                        <h3>Code Meets Design</h3>
+                        <p>Building seamless digital experiences through code, creativity, and user-centered design.</p>
                         <div class="project-tags">
                             <span class="project-tag">Web Development</span>
                             <span class="project-tag">UI/UX</span>
@@ -2840,7 +2935,7 @@
                             <img src="ds.jpg" alt="Dhirendra Shahi" class="author-image">
                             <div class="author-info">
                                 <h4>Dhirendra Shahi</h4>
-                                <p>Multimedia/technical instructor/trainer at SERA</p>
+                                <p>Engineer, Multimedia/technical instructor/trainer at SERA</p>
                             </div>
                         </div>
                     </div>
@@ -4270,6 +4365,50 @@
                     icon.classList.remove('fa-times');
                 });
             });
+        });
+    </script>
+    <!-- Coffee Cup Button -->
+    <div class="coffee-btn">
+        <span class="steam steam-1"></span>
+        <span class="steam steam-2"></span>
+        <span class="steam steam-3"></span>
+        <span class="steam steam-4"></span>
+        <i class="fas fa-mug-hot"></i>
+    </div>
+
+    <!-- Coffee Modal -->
+    <div class="coffee-modal" id="coffeeModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <h2>☕️ Buy me a coffee</h2>
+                <img src="image.jpg" alt="Coffee image" class="coffee-gif">
+                <p>garibi hatao...mujhe ameer banao😒!</p>
+                <a href="image.jpg" download="coffee-image.jpg" class="download-btn">
+                    <i class="fas fa-download"></i> Download Image
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Coffee modal functionality
+        const coffeeBtn = document.querySelector('.coffee-btn');
+        const coffeeModal = document.getElementById('coffeeModal');
+        const closeModal = coffeeModal.querySelector('.close-modal');
+
+        coffeeBtn.addEventListener('click', () => {
+            coffeeModal.style.display = 'flex';
+        });
+
+        closeModal.addEventListener('click', () => {
+            coffeeModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === coffeeModal) {
+                coffeeModal.style.display = 'none';
+            }
         });
     </script>
 </body>
