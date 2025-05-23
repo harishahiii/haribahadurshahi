@@ -36,70 +36,116 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Three.js Background Setup
-let scene, camera, renderer, particles;
+let scene, camera, renderer, waves;
 
 function initThreeJS() {
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    renderer = new THREE.WebGLRenderer({
-        canvas: document.getElementById('bg-canvas'),
-        alpha: true
-    });
-    
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    
-    // Add ambient light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-    
-    // Add point light
-    const pointLight = new THREE.PointLight(0xffffff, 1);
-    pointLight.position.set(5, 5, 5);
-    scene.add(pointLight);
-    
-    // Create particles
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 2000;
-    const posArray = new Float32Array(particlesCount * 3);
-    
-    for(let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 10;
+    try {
+        // Get the canvas element and its container
+        const canvas = document.getElementById('threejs-bg');
+        const container = canvas.parentElement;
+        
+        if (!canvas || !container) {
+            console.error('Canvas or container element not found');
+            return;
+        }
+
+        // Initialize scene
+        scene = new THREE.Scene();
+        
+        // Initialize camera with container dimensions
+        const aspect = container.clientWidth / container.clientHeight;
+        camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
+        camera.position.z = 5;
+        camera.position.y = 2;
+        camera.lookAt(0, 0, 0);
+
+        // Initialize renderer with container dimensions
+        renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            alpha: true,
+            antialias: true
+        });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0x6e45e2, 0.5);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0x11d8c6, 1);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+
+        // Create waves that fill the container
+        const geometry = new THREE.PlaneGeometry(20, 20, 100, 100);
+        const material = new THREE.MeshPhongMaterial({
+            color: 0x6e45e2,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.6,
+            side: THREE.DoubleSide
+        });
+
+        waves = new THREE.Mesh(geometry, material);
+        waves.rotation.x = -Math.PI / 2;
+        waves.position.y = -2;
+        scene.add(waves);
+
+        // Handle container resize
+        const resizeObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                const { width, height } = entry.contentRect;
+                onContainerResize(width, height);
+            }
+        });
+        
+        resizeObserver.observe(container);
+
+        // Start animation loop
+        animate();
+        
+        console.log('Three.js initialization successful');
+    } catch (error) {
+        console.error('Error initializing Three.js:', error);
     }
-    
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    
-    const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.005,
-        color: 0x2196f3,
-        transparent: true,
-        opacity: 0.8,
-        blending: THREE.AdditiveBlending
-    });
-    
-    particles = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particles);
-    
-    camera.position.z = 3;
+}
+
+// Handle container resize
+function onContainerResize(width, height) {
+    if (camera && renderer) {
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+    }
 }
 
 // Animation loop
 function animate() {
-    requestAnimationFrame(animate);
-    
-    if (particles) {
-        particles.rotation.x += 0.0005;
-        particles.rotation.y += 0.0005;
-    }
-    
-    renderer.render(scene, camera);
-}
+    try {
+        requestAnimationFrame(animate);
 
-// Handle window resize
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+        if (waves && waves.geometry) {
+            const time = Date.now() * 0.001;
+            const position = waves.geometry.attributes.position;
+
+            for(let i = 0; i < position.count; i++) {
+                const x = position.getX(i);
+                const y = position.getY(i);
+                const xOffset = Math.sin(x + time) * 0.3;
+                const yOffset = Math.cos(y + time) * 0.3;
+                position.setZ(i, xOffset + yOffset);
+            }
+
+            position.needsUpdate = true;
+            waves.rotation.z += 0.001;
+        }
+
+        if (renderer && scene && camera) {
+            renderer.render(scene, camera);
+        }
+    } catch (error) {
+        console.error('Error in animation loop:', error);
+    }
 }
 
 // Scroll animations
@@ -895,4 +941,4 @@ function initScrollReveal() {
     });
 }
 
-window.addEventListener('resize', onWindowResize);
+window.addEventListener('resize', onContainerResize);
